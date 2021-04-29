@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b561a4c6eecb74a4aaa8757c1014329d, type: 3}
+  m_Name: Level 1
+  m_EditorClassIdentifier: 
+  levelNumber: 0
+  totalEnemies: 10
+  maxEnemiesAtTime: 10
+  enemiesAllowedToSpawn:
+  - {fileID: 3480681606109324719, guid: 261c1484641a22d40badca5c60cda391, type: 3}
+  chancesOfEnemiesSpawning:
+  - 100
+  powerUps:
+  - {fileID: 3827712026222437322, guid: 5642f867fbefc214f9220303d5646c19, type: 3}
+  - {fileID: 6308277994548087778, guid: 5fe8ee37f9dbaa1418015358ec4c79f8, type: 3}
+  - {fileID: 7437428058083138574, guid: 15e6cffca9e92aa48852989595cbc3fe, type: 3}
+  chancesOfPowerUps: []

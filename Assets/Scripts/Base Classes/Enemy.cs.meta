@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: d34c1dfafdd8d81428a889d89f42a83e
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - ragdoll: {instanceID: 0}
+  - hitFlash: {fileID: 2100000, guid: a850bc9cfd422f545af9520a51c678a2, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

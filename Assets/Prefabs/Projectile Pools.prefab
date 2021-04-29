@@ -1,0 +1,479 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1495841547
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1495841548}
+  - component: {fileID: 1495841549}
+  m_Layer: 0
+  m_Name: Enemy Projectile Pool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1495841548
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1495841547}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 9033375113454373740}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1495841549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1495841547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20355dc542d07c34b93133fb595bc388, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectileCopies:
+  - {fileID: 9026051057718622672, guid: e0709b7386922ca4b960a060da625ffb, type: 3}
+  poolSizes: 5e010000
+--- !u!1 &1641327124
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1641327125}
+  - component: {fileID: 1641327126}
+  m_Layer: 0
+  m_Name: Rocket Launcher Alt Projectile Pool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1641327125
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1641327124}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 9033375113454373740}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1641327126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1641327124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20355dc542d07c34b93133fb595bc388, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectileCopies:
+  - {fileID: 5517589068362296189, guid: 137c0667478de174a8326fbba4981b2f, type: 3}
+  - {fileID: 5517589068362296189, guid: 3ffc785c800902b46b2982b820081c74, type: 3}
+  - {fileID: 5517589068362296189, guid: 88a85c343133df74aa0c7884a8108a25, type: 3}
+  - {fileID: 5517589068362296189, guid: 49dff3b880d905b43872b1957f46460a, type: 3}
+  poolSizes: 00000000320000003200000032000000
+--- !u!1 &1328631936844009835
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5446836731453730834}
+  - component: {fileID: 2073744673184934385}
+  m_Layer: 0
+  m_Name: Rocket Launcher Projectile Pool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5446836731453730834
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1328631936844009835}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 9033375113454373740}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2073744673184934385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1328631936844009835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20355dc542d07c34b93133fb595bc388, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectileCopies:
+  - {fileID: 6023459648400459234, guid: b7094649e627de94f90de7fa004a7557, type: 3}
+  - {fileID: 6023459648400459234, guid: 4119b175ace0f4f46843b72b5a30e570, type: 3}
+  - {fileID: 6023459648400459234, guid: c779acddc4431014f988cef41b617012, type: 3}
+  - {fileID: 6023459648400459234, guid: 417594af0a4242541a4cbfaed376074e, type: 3}
+  poolSizes: 0f0000000f0000000f0000000f000000
+--- !u!1 &2329640110910457772
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2009154944700374525}
+  - component: {fileID: 9052226055271359258}
+  m_Layer: 0
+  m_Name: Sniper Rifle Projectile Pool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2009154944700374525
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2329640110910457772}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 9033375113454373740}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9052226055271359258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2329640110910457772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20355dc542d07c34b93133fb595bc388, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectileCopies:
+  - {fileID: 3948057572289530683, guid: fb392acdce1704843a6bc90bcdf7c667, type: 3}
+  - {fileID: 3948057572289530683, guid: a6641f8e9f3f07f4ea0262fdf7ca2b40, type: 3}
+  - {fileID: 3948057572289530683, guid: cdaf3eddc18d3dd47bfa2f80b4a1eccb, type: 3}
+  - {fileID: 3948057572289530683, guid: ec26dcbac3fa0764e9765bbf686501c5, type: 3}
+  poolSizes: 32000000320000003200000032000000
+--- !u!1 &3743450352813350028
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9033375113454373740}
+  m_Layer: 0
+  m_Name: Projectile Pools
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9033375113454373740
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3743450352813350028}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -15.836725, y: -19.15775, z: -7.9142466}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 8098010722267910093}
+  - {fileID: 2009154944700374525}
+  - {fileID: 1797513040402100318}
+  - {fileID: 3716761353365100019}
+  - {fileID: 5924167549571232033}
+  - {fileID: 545377699033857413}
+  - {fileID: 5446836731453730834}
+  - {fileID: 1641327125}
+  - {fileID: 1495841548}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3794672188811837965
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 545377699033857413}
+  - component: {fileID: 5517457983371198008}
+  m_Layer: 0
+  m_Name: Charge Rifle Projectile Pool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &545377699033857413
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3794672188811837965}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 9033375113454373740}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5517457983371198008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3794672188811837965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20355dc542d07c34b93133fb595bc388, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectileCopies:
+  - {fileID: 7238456132850368669, guid: 7f92b9888fa313d4ea4865f9a9cb602a, type: 3}
+  - {fileID: 7238456132850368669, guid: cb337fe0e33f0aa4c8463b9db8dd2467, type: 3}
+  - {fileID: 7238456132850368669, guid: 2b989de067b16a44fb52c172e25ca4ab, type: 3}
+  - {fileID: 7238456132850368669, guid: c535322b83d22f34c8929bfa17926d3f, type: 3}
+  poolSizes: 14000000140000001400000014000000
+--- !u!1 &6080525043774869437
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5924167549571232033}
+  - component: {fileID: 7554869231172231048}
+  m_Layer: 0
+  m_Name: Shredder Projectile Pool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5924167549571232033
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6080525043774869437}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 9033375113454373740}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7554869231172231048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6080525043774869437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20355dc542d07c34b93133fb595bc388, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectileCopies:
+  - {fileID: 558299960158819875, guid: bf15c371f47c7a04381c19a3e98bcd1d, type: 3}
+  - {fileID: 558299960158819875, guid: bf15c371f47c7a04381c19a3e98bcd1d, type: 3}
+  - {fileID: 558299960158819875, guid: bf15c371f47c7a04381c19a3e98bcd1d, type: 3}
+  - {fileID: 558299960158819875, guid: bf15c371f47c7a04381c19a3e98bcd1d, type: 3}
+  poolSizes: 14000000140000001400000014000000
+--- !u!1 &8035107987888923594
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3716761353365100019}
+  - component: {fileID: 5387783173970588001}
+  m_Layer: 0
+  m_Name: Sticky Bomb Launcher Projectile Pool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3716761353365100019
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8035107987888923594}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 9033375113454373740}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5387783173970588001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8035107987888923594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20355dc542d07c34b93133fb595bc388, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectileCopies:
+  - {fileID: 1680018956470346239, guid: ee9ebc831983652499be81bb87907be6, type: 3}
+  - {fileID: 1680018956470346239, guid: 14f8846d5b45daa4aa8743e6f84616eb, type: 3}
+  - {fileID: 1680018956470346239, guid: f1f01fa3614d6c64b9b5ef9dc0cab6dd, type: 3}
+  - {fileID: 1680018956470346239, guid: 74fc65d30ff0dd848a54d2924feac84a, type: 3}
+  poolSizes: 96000000960000009600000096000000
+--- !u!1 &8098010722267910091
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8098010722267910093}
+  - component: {fileID: 8098010722267910090}
+  m_Layer: 0
+  m_Name: Assault Rifle Projectile Pool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8098010722267910093
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8098010722267910091}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 9033375113454373740}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8098010722267910090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8098010722267910091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20355dc542d07c34b93133fb595bc388, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectileCopies:
+  - {fileID: 4283168573836510199, guid: e1197de1d1d8d74419d7e1c4eedc3354, type: 3}
+  - {fileID: 8120489036304748784, guid: 5011505852128754bba05d4fe456947d, type: 3}
+  - {fileID: 2400780100332562245, guid: 11fc6522f80123647a617e2b4bd526f9, type: 3}
+  - {fileID: 4989034070416219581, guid: 3eb13c9801138364ba03f158494396b1, type: 3}
+  poolSizes: c8000000c8000000c8000000c8000000
+--- !u!1 &9085304397716851542
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1797513040402100318}
+  - component: {fileID: 8785833674221049597}
+  m_Layer: 0
+  m_Name: Deagle Projectile Pool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1797513040402100318
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9085304397716851542}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 9033375113454373740}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8785833674221049597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9085304397716851542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20355dc542d07c34b93133fb595bc388, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectileCopies:
+  - {fileID: 8690843470034597920, guid: 0eaba0811d6a3ca42b7287af2e9efe50, type: 3}
+  - {fileID: 8690843470034597920, guid: 133d4f49f30f9214d8fe45356b65a622, type: 3}
+  - {fileID: 8690843470034597920, guid: bd3ab45a16bca0f419705bc2bb5a9eb2, type: 3}
+  - {fileID: 8690843470034597920, guid: cb1596f0caa94ae479f4c326b202a1c2, type: 3}
+  poolSizes: 4b000000960000009600000096000000

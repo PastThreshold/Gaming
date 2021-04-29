@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Room
+  - Pickup
+  - Projectile
+  - Sphere Weapon
+  - Enemy
+  - EMP
+  - Shield
+  - Bullet
+  - Detect Bullet
+  - Special
+  - Deflect
+  - ProjectileGate
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - PostProcessing
+  - Projectile
+  - Player
+  - Explosions
+  - Enemies
+  - Enemy Projectile
+  - Room
+  - PowerUp
+  - Ragdoll
+  - Other
+  - Player Shield
+  - Enemy Shield
+  - Grapple
+  - TimeField
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0

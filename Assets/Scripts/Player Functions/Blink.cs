@@ -215,11 +215,13 @@ public class Blink : BasicAbility, AbilityADT
             {
                 StartCoroutine("WaitAltLongBlink");
                 AltLongTeleport();
+                AbilityUsed();
             }
             else if (canBlink)
             {
                 StartCoroutine("WaitToBlinkAgain");
                 Teleport();
+                AbilityUsed();
             }
         }
     }

@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 [CreateAssetMenu(menuName = "Room Data")]
 public class RoomData : ScriptableObject
 {
+    [SerializeField] Wave[] waves;
     [SerializeField] int levelNumber;
     [SerializeField] int totalEnemies = 100;
     [SerializeField] int maxEnemiesAtTime = 10;
@@ -27,4 +29,12 @@ public class RoomData : ScriptableObject
     public GameObject[] GetPowerUps() { return powerUps; }
 
     public float[] GetPowerUpChances() { return chancesOfPowerUps; }
+
+
+    public Wave GetNextWave()
+    {
+        return waves[0];
+    }
 }
+
+

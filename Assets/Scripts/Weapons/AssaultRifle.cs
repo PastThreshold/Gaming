@@ -27,6 +27,11 @@ public class AssaultRifle : BasicWeapon
         }
     }
 
+    private void Awake()
+    {
+        BaseAwake();
+    }
+
     private void Start()
     {
         BaseStart();

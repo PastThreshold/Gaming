@@ -11,6 +11,8 @@ public class Player : MonoBehaviour
     public float health = 100;
     [SerializeField] float maxHealth = 100;
     [SerializeField] float groundFindDistance = 0.2f;
+    Vector3 previousPosition;
+    Vector3 currentPosition;
 
     public bool increasedSpeed = false;
     [SerializeField] float addFactor = -1.2265f;
@@ -77,6 +79,9 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
+        previousPosition = currentPosition;
+        currentPosition = transform.position;
+        //print((previousPosition == currentPosition) + " With prev: " + previousPosition.ToString("F3") + " and current: " + currentPosition.ToString("F3"));
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
@@ -222,5 +227,15 @@ public class Player : MonoBehaviour
             print(proj.name + " New damage: " + proj.GetDamage());
         }
         return enraged;
+    }
+
+    public Vector3 GetPreviousPos()
+    {
+        return previousPosition;
+    }
+
+    public Vector3 GetCurrentPos()
+    {
+        return currentPosition;
     }
 }

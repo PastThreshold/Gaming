@@ -140,7 +140,7 @@ public class HoldPickup : BasicAbility, AbilityADT
         {
             holdingDown = true;
         }
-
+        AbilityInUse();
         keyHeldDown = true;
     }
 
@@ -164,7 +164,10 @@ public class HoldPickup : BasicAbility, AbilityADT
                 ThrowPickup();
 
             holdingDown = false;
+            AbilityUsed();
         }
+        else
+            AbilityNotInUse();
         keyHeldDown = false;
     }
 

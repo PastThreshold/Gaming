@@ -96,8 +96,21 @@ public class BehaviorController : MonoBehaviour
             }
 
             // Below Sets all the positions for the enemies, the formation looks kinda like .-----.
-            Vector3 middlePos = GlobalClass.playerPos;
-            middlePos += Extra.CreateRandomVector(1f).normalized * 8f;
+            Vector3 middlePos;
+            int safetyBreak = 0;
+            do // If the chosen middle point of the formation is in an outerbound or too close to the wall then recalculate
+            {
+                middlePos = GlobalClass.playerPos + Extra.CreateRandomVector(1f).normalized * 8f;
+                safetyBreak++;
+                Extra.DrawBox(middlePos, 1f, Color.red, 3f);
+                if (Extra.CheckSafetyBreak(safetyBreak, 10))
+                {
+                    Debug.Log("Infinite Loop Safety Break Triggered");
+                    break;
+                }
+            } while (LevelController.CheckTransformOutOfBounds(middlePos));
+
+
             Vector3 dirToPlayer = (GlobalClass.playerPos - middlePos).normalized;
             Vector3 oppDir = Quaternion.Euler(0, -90f, 0) * dirToPlayer * distBetweenRobots;
             Vector3 robotPosition = middlePos + 
@@ -490,7 +503,7 @@ public class BehaviorController : MonoBehaviour
                 if (collidersHit.Length >= 5) // Are there at least 5 colliders for three possible enemies
                 {
                     List<GameObject> gameObjectsHit = CollisionHandler.TestSingleTriggerArray(collidersHit); // Sift out extra colliders
-                    EnemyList uniqueEnemies = Extra.ListOfGameObjectsToEnemyList(gameObjectsHit); // Sift out the enemies
+                    EnemyList uniqueEnemies = Extra.CovertListOfGameObjectsToEnemyList(gameObjectsHit); // Sift out the enemies
                     List<Robot> robotsDetected = uniqueEnemies.GetRobotList();
                     print("There are " + robotsDetected.Count + " in the list before sifting");
                     List<Enemy> finalRobots = new List<Enemy>();

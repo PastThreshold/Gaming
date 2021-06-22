@@ -189,6 +189,7 @@ public class Shred : Projectile
     /// </summary>
     public void Unparent()
     {
+        print("fuck you");
         stuckTo = null;
         gameObject.layer = 16;
         damageCollider.enabled = false;

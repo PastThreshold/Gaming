@@ -17,6 +17,18 @@ public class SniperRifle : BasicWeapon
     RaycastHit hit;
     LineRenderer laserComponent;
 
+    private void Awake()
+    {
+        BaseAwake();
+        laserComponent = laserSight.GetComponent<LineRenderer>();
+    }
+
+    private void Start()
+    {
+        BaseStart();
+        CheckWeaponLevel();
+    }
+
     public override void CheckWeaponLevel()
     {
         base.CheckWeaponLevel();
@@ -43,13 +55,6 @@ public class SniperRifle : BasicWeapon
         {
             laserComponent.enabled = true;
         }
-    }
-
-    private void Start()
-    {
-        BaseStart();
-        laserComponent = laserSight.GetComponent<LineRenderer>();
-        CheckWeaponLevel();
     }
 
     void Update()
@@ -94,12 +99,13 @@ public class SniperRifle : BasicWeapon
 
     public override void EnableWeapon()
     {
+        base.EnableWeapon();
         laserComponent.enabled = true;
     }
 
     public override void DisableWeapon()
     {
+        base.DisableWeapon();
         laserComponent.enabled = false;
-        print("cal");
     }
 }

@@ -7,7 +7,7 @@ using UnityEngine;
 /// Used for storing large amount of enemies where their specific script is needed
 /// So that is does not require indexing through list to find enemies of that type
 /// </summary>
-public class EnemyList
+public class EnemyList : MonoBehaviour
 {
     List<Robot> robotList;
     List<Protector> protectorList;
@@ -28,6 +28,7 @@ public class EnemyList
 
     public void Add(Enemy enemy)
     {
+        print("fuck " + robotList.Count + " name: " + enemy.name);
         switch (enemy.enemyType)
         {
             case Enemy.EnemyType.robot:
@@ -51,6 +52,7 @@ public class EnemyList
             default:
                 break;
         }
+        print("f " + robotList.Count);
     }
 
     public bool Remove(Enemy enemy)

@@ -7,9 +7,13 @@ public class RocketLauncher : BasicWeapon
 {
     ProjectilePoolHandler altProjPool;
     [SerializeField] int levelToAltFire = 2;
-
+    private void Awake()
+    {
+        BaseAwake();
+    }
     private void Start()
     {
+        BaseStart();
         projPool = GlobalClass.rpgPool;
         altProjPool = GlobalClass.rpgAltPool;
         CheckWeaponLevel();

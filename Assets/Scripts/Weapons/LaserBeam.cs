@@ -10,9 +10,14 @@ public class LaserBeam : BasicWeapon
     [SerializeField] public float damage = 10;
     public bool waitingToTick;
 
-    // Start is called before the first frame update
+    private void Awake()
+    {
+        BaseAwake();
+    }
+
     void Start()
     {
+        BaseStart();
         CheckWeaponLevel();
         DisableLaser();
     }
@@ -68,7 +73,6 @@ public class LaserBeam : BasicWeapon
             spawnedLaser.transform.position = projectileSpawn.transform.position;
             Debug.DrawRay(projectileSpawn.transform.position, firePointRotation.transform.forward, Color.black, 5f);
             Physics.Raycast(projectileSpawn.transform.position, firePointRotation.transform.forward, out RaycastHit hit, 100f, GlobalClass.exD.wallsAndEnemyShieldsLayerMask);
-            print(hit.distance);
             Debug.DrawRay(projectileSpawn.transform.position, firePointRotation.transform.forward * hit.distance, Color.black, 5f);
             spawnedLaserScript.SetColliderSize(hit.distance);
         }

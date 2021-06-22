@@ -13,4 +13,6 @@ public class ExtraData : MonoBehaviour
     public LayerMask proctilesOnlyLM;
     public LayerMask bulletsNoDefault;
     public LayerMask wallsAndEnemyShieldsLayerMask;
+
+    public Enemy[] enemyPrefabs;
 }

@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b561a4c6eecb74a4aaa8757c1014329d, type: 3}
   m_Name: Testing 2
   m_EditorClassIdentifier: 
+  waves:
+  - {fileID: 11400000, guid: c3dad47ffb37f6648bfe194a44cae724, type: 2}
   levelNumber: 0
   totalEnemies: 10
   maxEnemiesAtTime: 10
   enemiesAllowedToSpawn:
-  - {fileID: 4398544214307991170, guid: c3eb088f93ee0c043ac56cc17073ae49, type: 3}
+  - {fileID: 1186993866386202297, guid: f79f85e91b8b89e4ab2a4c536c7f6a25, type: 3}
   - {fileID: -7098076406716867578, guid: 4af53ef367deb6b43915706481ce40bb, type: 3}
   - {fileID: 4775496079983928083, guid: 9e1a9a24dde8ca54c931bf20507c4edd, type: 3}
   - {fileID: 4305603944975177843, guid: 80b5911a94af33f47a0a10912a528961, type: 3}
@@ -26,7 +28,7 @@ MonoBehaviour:
   - 20
   - 15
   - 10
-  - 25
+  - 5
   powerUps:
   - {fileID: 3827712026222437322, guid: 5642f867fbefc214f9220303d5646c19, type: 3}
   - {fileID: 6308277994548087778, guid: 5fe8ee37f9dbaa1418015358ec4c79f8, type: 3}

@@ -45,6 +45,7 @@ public class Enemy : MonoBehaviour
     protected bool inFormation = false;
 
     [Header("Movement")]
+    protected MovementReason currentMovementReason = MovementReason.none;
     [SerializeField] protected float randMoveTimerMax = 5f; // Cooldown
     [SerializeField] protected float randMoveTimerMin = 1.5f;
     [SerializeField] protected float randMoveDistMax = 15f;
@@ -94,34 +95,35 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    protected void BaseUpdate()
+    {
+        playerPosPrev = player.GetPreviousPos();
+        playerPos = player.GetCurrentPos();
+    }
+
     protected void Move(Vector3 positionToMoveTo)
     {
         nma.SetDestination(positionToMoveTo);
         nma.isStopped = false;
+        currentMovementReason =  MovementReason.none;
     }
 
-    private void GetRidOfChildren()
+    protected void Move(Vector3 positionToMoveTo, MovementReason reason)
     {
-        BroadcastMessage("Unparent", SendMessageOptions.DontRequireReceiver);
+        nma.SetDestination(positionToMoveTo);
+        nma.isStopped = false;
+        currentMovementReason = reason;
     }
 
-    private void UpdateHealthAndLists()
+    protected virtual void MoveBackInBounds()
     {
-        if (health <= dangerousHealth && !inDanger)
-        {
-            inDanger = true;
-            LevelController.AddEnemyInDanger(this);
-        }
-    }
-
-    private void UpdateGameLists()
-    {
-        LevelController.RemoveEnemy(this);
-        if (inDanger)
-        {
-            LevelController.RemoveEnemyInDanger(this);
-        }
-
+        Extra.Box2D[] bounds = LevelController.GetAllInBounds();
+        Vector3 closest = bounds[0].ClosestPointInBounds(transform.position);
+        Vector3 toPos = closest - transform.position;
+        Vector3 newPos = Extra.RandomVectorYRotation(-30f, 30f) * toPos.normalized * Random.Range(2.5f, 5f) + closest;
+        Move(newPos);
+        randomMovementCooldown = true;
+        StartCoroutine(RandomMovementCooldown());
     }
 
     protected IEnumerator MoveRandomly()
@@ -151,14 +153,20 @@ public class Enemy : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
         }
 
-
         movingRandomly = false;
         StartCoroutine(RandomMovementCooldown());
     }
 
+
     protected IEnumerator RandomMovementCooldown()
     {
         yield return new WaitForSeconds(Random.Range(randMoveTimerMin, randMoveTimerMax));
+        randomMovementCooldown = false;
+    }
+
+    protected IEnumerator RandomMovementCooldown(float min, float max)
+    {
+        yield return new WaitForSeconds(Random.Range(min, max));
         randomMovementCooldown = false;
     }
 
@@ -169,6 +177,33 @@ public class Enemy : MonoBehaviour
         StopCoroutine(MoveRandomly());
         StopCoroutine(RandomMovementCooldown());
     }
+
+    public bool CheckIfAtEndOfPath()
+    {
+        if (nma == null)
+            return true;
+        if (nma.hasPath)
+        {
+            if (nma.remainingDistance <= 0.1f)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public MovementReason GetCurrentMovementReason() { return currentMovementReason; }
+
+    public virtual void StopMovement()
+    {
+        nma.ResetPath();
+        nma.isStopped = true;
+        nma.velocity = Vector3.zero;
+    }
+
+
+
+
 
     protected virtual void TakenDamage()
     {
@@ -241,8 +276,16 @@ public class Enemy : MonoBehaviour
     }
 
 
-    // Meant for weapons that you would expect to push things back as they impact
 
+
+
+
+
+
+
+
+
+    // Meant for weapons that you would expect to push things back as they impact
     private void Death(float knockback, Vector3 objectDirection)
     {
         UpdateGameLists();
@@ -305,11 +348,36 @@ public class Enemy : MonoBehaviour
             behaviorHandler.EnemyInFormationDied(this);
     }
 
+
+    private void GetRidOfChildren()
+    {
+        BroadcastMessage("Unparent", SendMessageOptions.DontRequireReceiver);
+    }
+
+    private void UpdateHealthAndLists()
+    {
+        if (health <= dangerousHealth && !inDanger)
+        {
+            inDanger = true;
+            LevelController.AddEnemyInDanger(this);
+        }
+    }
+
+    private void UpdateGameLists()
+    {
+        LevelController.RemoveEnemy(this);
+        if (inDanger)
+        {
+            LevelController.RemoveEnemyInDanger(this);
+        }
+
+    }
+
     // Methods to control the active commanders that have their target on this enemy
     public void AddCommander(GameObject obj, Commander script, float damageFactor)
     {
         activeCommanders.Add(script);
-        ChangeDamageChangeFactor(obj, damageFactor);
+        AddDamageChangeFactor(obj, damageFactor);
     }
     public void RemoveCommander(GameObject obj, Commander script)
     {
@@ -356,7 +424,7 @@ public class Enemy : MonoBehaviour
         return total;
     }
 
-    public void ChangeDamageChangeFactor(GameObject objectCalling, float factor)
+    public void AddDamageChangeFactor(GameObject objectCalling, float factor)
     {
         activeDamageChanges.Add(new DamageBoost(objectCalling, factor));
     }
@@ -374,27 +442,6 @@ public class Enemy : MonoBehaviour
         return false;
     }
 
-    public bool CheckIfAtEndOfPath()
-    {
-        if (nma == null)
-            return true;
-        if (nma.hasPath)
-        {
-            if (nma.remainingDistance <= 0.1f)
-            {
-                return true;
-            }
-            return false;
-        }
-        return true;
-    }
-
-    public virtual void StopMovement()
-    {
-        nma.ResetPath();
-        nma.isStopped = true;
-        nma.velocity = Vector3.zero;
-    }
 
     public virtual void StartGroupProtection(Vector3 position)
     {
@@ -417,4 +464,17 @@ public class Enemy : MonoBehaviour
     public void SetBehaviorHandler(BehaviorController.BehaviorHandler behaviorHandler) { this.behaviorHandler = behaviorHandler; }
     public bool HasActiveBehavior() { return activeBehavior != BehaviorController.Behavior.none; }
     public BehaviorController.Behavior GetActiveBehavior() { return activeBehavior; }
+
+    protected bool IsOutOfBounds() { return LevelController.CheckTransformOutOfBounds(transform.position); }
+
+
+
+
+    
+
+    public enum MovementReason
+    {
+        none,
+        commanderIntoGroup,
+    }
 }

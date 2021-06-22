@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class Shredder : BasicWeapon
 {
+    private void Awake()
+    {
+        BaseAwake();
+    }
+
     void Start()
     {
+        BaseStart();
         projPool = GlobalClass.shredderPool;
         CheckWeaponLevel();
     }

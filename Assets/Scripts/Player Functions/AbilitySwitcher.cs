@@ -46,7 +46,7 @@ public class AbilitySwitcher : MonoBehaviour
         hudScript = hud.GetComponent<HeadsUpDisplay>();
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         if (menuActive)

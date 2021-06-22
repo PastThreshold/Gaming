@@ -25,6 +25,7 @@ public class BasicWeapon : MonoBehaviour
         nullVal,
     }
     [SerializeField] protected WeaponType weaponType;
+
     const int MAX_LEVEL = 4;
     const int PERM_MAX_LEVEL = 3;
     [Range(1, 4)] [SerializeField] protected int permanantWeaponLevel = 1;
@@ -56,51 +57,27 @@ public class BasicWeapon : MonoBehaviour
     [SerializeField] protected bool canFire = true;
     public bool active;
 
-    protected AudioSource shotSound;
+    MeshRenderer[] meshes;
+
+protected AudioSource shotSound;
     [SerializeField] protected AudioClip gunshotSound;
     [SerializeField] protected float pitchRandomization;
     [SerializeField] protected float soundVolume;
 
-    private void Start()
+    void Awake()
+    {
+        BaseAwake();
+       
+    }
+
+    void Start()
     {
         BaseStart();
-        shotSound = GetComponent<AudioSource>();
-        switch (weaponType)
-        {
-            case WeaponType.assaultRifle:
-                weaponTypeInt = 0;
-                break;
-            case WeaponType.sniperRifle:
-                weaponTypeInt = 1;
-                break;
-            case WeaponType.shotgun:
-                weaponTypeInt = 2;
-                break;
-            case WeaponType.deagle:
-                weaponTypeInt = 3;
-                break;
-            case WeaponType.stickyBombLauncher:
-                weaponTypeInt = 4;
-                break;
-            case WeaponType.shredder:
-                weaponTypeInt = 5;
-                break;
-            case WeaponType.laser:
-                weaponTypeInt = 6;
-                break;
-            case WeaponType.chargeRifle:
-                weaponTypeInt = 7;
-                break;
-            case WeaponType.rpg:
-                weaponTypeInt = 8;
-                break;
-            case WeaponType.strike:
-                weaponTypeInt = 9;
-                break;
-            default:
-                Debug.Log("Weapon Int Error");
-                break;
-        }
+    }
+
+    protected void BaseAwake()
+    {
+        meshes = GetComponentsInChildren<MeshRenderer>();
     }
 
     protected void BaseStart()
@@ -276,6 +253,7 @@ public class BasicWeapon : MonoBehaviour
             temporaryLevelUpgrade = false;
 
         CheckWeaponLevel();
+
     }
 
     public virtual void SpeedUpFireRate(float factor) // Virtual means that this method can be overidden by each weapon's script
@@ -310,11 +288,19 @@ public class BasicWeapon : MonoBehaviour
     /// </summary>
     public virtual void EnableWeapon()
     {
-
+        foreach (MeshRenderer mesh in meshes)
+        {
+            mesh.enabled = true;
+        }
+        active = true;
     }
 
     public virtual void DisableWeapon()
     {
-
+        foreach (MeshRenderer mesh in meshes)
+        {
+            mesh.enabled = false;
+        }
+        active = false;
     }
 }

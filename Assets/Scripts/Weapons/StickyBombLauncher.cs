@@ -11,8 +11,14 @@ public class StickyBombLauncher : BasicWeapon
     [SerializeField] float timeBetweenExplosion = 0.08f;
     [SerializeField] GameObject connectedLaser;
 
+    private void Awake()
+    {
+        BaseAwake();
+    }
+
     private void Start()
     {
+        BaseStart();
         projPool = GlobalClass.stickyblPool;
         allStickyBombsActive = new List<StickyBomb>();
         CheckWeaponLevel();
@@ -174,6 +180,6 @@ public class StickyBombLauncher : BasicWeapon
 
     public override void DisableWeapon()
     {
-        Explode();
+        base.DisableWeapon();
     }
 }

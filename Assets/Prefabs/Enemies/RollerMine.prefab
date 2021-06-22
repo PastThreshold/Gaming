@@ -9,12 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4305603944975177845}
+  - component: {fileID: 4305603944975177843}
   - component: {fileID: 4305603944975177846}
   - component: {fileID: 4305603944975177847}
   - component: {fileID: 4305603944975177840}
   - component: {fileID: 4305603944975177841}
   - component: {fileID: 4305603944975177842}
-  - component: {fileID: 4305603944975177843}
   - component: {fileID: 8970835626256323298}
   m_Layer: 12
   m_Name: RollerMine
@@ -37,6 +37,48 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4305603944975177843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4305603944975177804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d15020d18328284caf1c31938e0c86d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyType: 4
+  health: 40
+  dangerousHealth: 20
+  inDanger: 0
+  ragdoll: {fileID: 0}
+  color: {r: 0, g: 0, b: 0, a: 0}
+  activeCommanders: []
+  activeProtectors: []
+  randMoveTimerMax: 5
+  randMoveTimerMin: 1.5
+  randMoveDistMax: 15
+  randMoveDistMin: 7.5
+  randMoveArcMax: 12
+  randMoveArcMin: 7
+  firePointRotation: {fileID: 0}
+  projectileSpawn: {fileID: 0}
+  fireRate: 1.2
+  predictionValue: 10
+  predictionChance: 75
+  damage: 10
+  moveSpeed: 100
+  distanceFactor: 5
+  velFactorWrongDirection: 1000
+  velFactorRightDirection: 10
+  velFactorReversingDirectionMax: 5
+  velFactorReversingDirectionMin: 0
+  velReverseExponent: 3
+  closeToPlayerDistanceSquared: 10
+  testFactor: 100
+  maxSpeed: 20
 --- !u!33 &4305603944975177846
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -137,38 +179,6 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &4305603944975177843
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4305603944975177804}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d15020d18328284caf1c31938e0c86d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyType: 0
-  health: 40
-  dangerousHealth: 20
-  ragdoll: {fileID: 0}
-  firePointRotation: {fileID: 0}
-  projectileSpawn: {fileID: 0}
-  fireRate: 1.2
-  predictionValue: 10
-  predictionChance: 75
-  damage: 10
-  moveSpeed: 100
-  distanceFactor: 5
-  velFactorWrongDirection: 1000
-  velFactorRightDirection: 10
-  velFactorReversingDirectionMax: 5
-  velFactorReversingDirectionMin: 0
-  velReverseExponent: 3
-  closeToPlayerDistanceSquared: 10
-  testFactor: 100
-  maxSpeed: 20
 --- !u!136 &8970835626256323298
 CapsuleCollider:
   m_ObjectHideFlags: 0

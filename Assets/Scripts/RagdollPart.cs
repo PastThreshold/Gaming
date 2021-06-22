@@ -5,7 +5,9 @@ using UnityEngine;
 public class RagdollPart : MonoBehaviour
 {
     Rigidbody rb;
+    [Tooltip("The root parent of the entire ragdoll")] 
     [SerializeField] RagdollPart containerParent = null;
+    [Tooltip("The join component of this object")] 
     [SerializeField] ConfigurableJoint joint;
     [SerializeField] float time = 3.5f;
     [SerializeField] float childBreakChance = 60f;

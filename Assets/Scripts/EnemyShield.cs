@@ -74,8 +74,8 @@ public class EnemyShield : MonoBehaviour
         currentHealth -= damage;
         if (currentHealth <= 0)
         {
+            BroadcastMessage("Unparent", SendMessageOptions.DontRequireReceiver);
             protectorScript.ShieldDestroyed(this);
-            DisableShield();
         }
         else
         {
@@ -129,6 +129,7 @@ public class EnemyShield : MonoBehaviour
 
     public void DisableShield()
     {
+        BroadcastMessage("Unparent", SendMessageOptions.DontRequireReceiver);
         protectorScript.DisableShield(this);
     }
 

@@ -113,12 +113,18 @@ public class DeflectAbility : BasicAbility, AbilityADT
         if (Input.GetKey(KeyCode.LeftShift))
         {
             if (canAlt)
+            {
                 if (!altOnCooldown)
+                {
                     AltFire();
+                    AbilityUsed();
+                }
+            }
         }
         else if (!onCooldown)
         {
             EnableProjectileShield();
+            AbilityUsed();
         }
     }
 

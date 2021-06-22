@@ -12,8 +12,14 @@ public class ChargeRifle : BasicWeapon
     ChargeShot shotScript;
     public bool shotCharging;
 
+    private void Awake()
+    {
+        BaseAwake();
+    }
+
     void Start()
     {
+        BaseStart();
         CheckWeaponLevel();
         shotCharging = false;
     }

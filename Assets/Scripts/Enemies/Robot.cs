@@ -14,6 +14,7 @@ public class Robot : Enemy
     [SerializeField] int minAmountOfShots = 3;
     [SerializeField] int maxAmountOfShots = 8;
     [SerializeField] GameObject muzzleFlashVFX;
+    [SerializeField] bool bezierMovment = true;
 
     float angle;
     float rotationSpeed = 50f;
@@ -31,10 +32,12 @@ public class Robot : Enemy
 
     private void Update()
     {
-        playerPosPrev = playerPos;
-        playerPos = player.transform.position;
+        playerPosPrev = player.GetPreviousPos();
+        playerPos = player.GetCurrentPos();
         if (inFormation)
         {
+            print(nma.hasPath + " Name: " + name + " Path Pending: " + nma.pathPending);
+
             switch (activeBehavior)
             {
                 case BehaviorController.Behavior.groupProt:
@@ -48,7 +51,21 @@ public class Robot : Enemy
         else
         {
             if (!randomMovementCooldown)
-                StartCoroutine(MoveRandomly());
+            {
+                if (IsOutOfBounds())
+                {
+                    MoveBackInBounds();
+                }
+                else
+                {
+                    if (bezierMovment)
+                    {
+                        StartCoroutine(MoveRandomly());
+                    }
+                    else
+                        MoveRandomlyStraight();
+                }
+            }
             if (canShoot)
                 StartCoroutine(Shoot());
             if (CheckIfAtEndOfPath())
@@ -60,6 +77,26 @@ public class Robot : Enemy
     {
         if (player)
             transform.LookAt(player.transform.position);
+    }
+
+    protected void MoveRandomlyStraight()
+    {
+        movingRandomly = true;
+        randomMovementCooldown = true;
+        Vector3 start = transform.position;
+        Vector3 endPos = start + Extra.CreateRandomVectorWithMagnitude(randMoveDistMin, randMoveDistMax);
+        if (NavMesh.SamplePosition(endPos, out NavMeshHit hit, 2f, NavMesh.AllAreas))
+        {
+            endPos = hit.position;
+        }
+        else
+        {
+            NavMesh.FindClosestEdge(endPos, out NavMeshHit edge, NavMesh.AllAreas);
+            endPos = edge.position;
+        }
+
+        Move(endPos);
+        StartCoroutine(RandomMovementCooldown());
     }
 
     private void LookAtPlayer()
@@ -114,16 +151,26 @@ public class Robot : Enemy
     public override void StopMovement()
     {
         base.StopMovement();
+        movingRandomly = false;
     }
 
-    public void StartFSquad(Vector3 postion)
+    public void StartFSquad(Vector3 position)
     {
+        print("this is real this is me" + name);
         inFormation = true;
         activeBehavior = BehaviorController.Behavior.robotFSquad;
+        StopRandomMovement();
         StopMovement();
         StopAllCoroutines();
-        Move(postion);
-        StopCoroutine(MoveRandomly());
+        StartCoroutine(WaitForEndFrameAndMove(position));
+    }
+
+    /// <summary> For whatever reason trying to use Move() for StartFSquad would result in half the enemies not moving. 
+    /// And this somehow fixes that </summary>
+    IEnumerator WaitForEndFrameAndMove(Vector3 position)
+    {
+        yield return new WaitForEndOfFrame();
+        Move(position, MovementReason.none);
     }
 
     public void FireInSquad(Vector3 postion)
@@ -139,7 +186,7 @@ public class Robot : Enemy
         StopRandomMovement();
         StopMovement();
         StopAllCoroutines();
-        Move(position);
+        Move(position, MovementReason.none);
     }
 
     public override void SecondStartGroupProtection()

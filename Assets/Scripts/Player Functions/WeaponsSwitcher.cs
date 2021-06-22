@@ -5,24 +5,15 @@ using UnityEngine;
 public class WeaponsSwitcher : MonoBehaviour
 {
     [Header("Weapons")]
-    [SerializeField] GameObject activeWeapon;
-    public GameObject[] equippedWeapons;
-    [SerializeField] GameObject[] allWeapons;
-    int activeNumber;
-
+    [SerializeField] BasicWeapon activeWeapon;
+    public BasicWeapon[] equippedWeapons;
+    [SerializeField] BasicWeapon[] allWeapons;
+    int activeSlot;
+    /*
     AssaultRifle ar; SniperRifle sniper; Shotgun shotty; Deagles deagle; StickyBombLauncher stickyBL; Shredder shredder;
     LaserBeam laser; ChargeRifle cr; RocketLauncher rpg;
+    */
 
-    [Header("Default Weapon")]
-    [Range(1, 4)] [SerializeField] int permanantArWeaponLevel = 1;
-                                     int currentArWeaponLevel = 1;
-                                   bool temporaryLevelUpgrade = false;
-
-    GameObject defaultWeapon;
-    [SerializeField] GameObject assualtRifleL1;
-    [SerializeField] GameObject assualtRifleL2;
-    [SerializeField] GameObject assualtRifleL3;
-    [SerializeField] GameObject assualtRifleL4;
 
     [Range(0f, 1f)] [SerializeField] float timerNotEquippedPercentageSubtraction = 0.10f;
     public float[] weaponTimers;
@@ -31,160 +22,34 @@ public class WeaponsSwitcher : MonoBehaviour
     HeadsUpDisplay hud;
 
     [Header("Missle Strike")]
-    [SerializeField] GameObject deadeyeWeapon;
+    [SerializeField] BasicWeapon deadeyeWeapon;
     public bool inDeadeye = false;
     public Vector3 targetPosition;
     public bool positionChosen = false;
     int lastWeaponEquipped = -1;
-
     GameObject explosion;
 
-    /* Called upon by the onTriggerEnter() when colliding with an upgrade script */
-    public void PermanantUpgradeDefaultWeapon()
-    {
-        if (permanantArWeaponLevel < 3)
-        {
-            permanantArWeaponLevel++;
-
-            if (currentArWeaponLevel < 4)
-            {
-                currentArWeaponLevel++;
-            }
-            CheckDefaultWepEquipAndLevel();
-        }
-    }
-
-    /* Called upon by upgrade pickup, keeps track of permant level and temporary */
-    public void TemporaryUpgradeDefaultWeapon(float time)
-    {
-        if (currentArWeaponLevel < 4)
-        {
-            if (!temporaryLevelUpgrade)
-            {
-                currentArWeaponLevel = permanantArWeaponLevel + 1;
-                temporaryLevelUpgrade = true;
-            }
-            else
-            {
-                currentArWeaponLevel++;
-            }
-
-            CheckDefaultWepEquipAndLevel();
-            StartCoroutine("DowngradeDefaultWeapon", time);
-        }
-    }
-
-    IEnumerator DowngradeDefaultWeapon(float time)
-    {
-        yield return new WaitForSeconds(time);
-
-        if (currentArWeaponLevel > permanantArWeaponLevel)
-        {
-            currentArWeaponLevel--;
-
-            if (currentArWeaponLevel == permanantArWeaponLevel)
-                temporaryLevelUpgrade = false;
-        }
-        else if (temporaryLevelUpgrade)
-            temporaryLevelUpgrade = false;
-
-        CheckDefaultWepEquipAndLevel();
-    }
-
-    /* This checks for the default weapon being equipped, and also sets the default weapon 
-     * if it was a different level */
-    private void CheckDefaultWepEquipAndLevel()
-    {
-        if (activeWeapon == defaultWeapon)
-        {
-            CheckDefaultWeapon();
-            SetEquippedWeaponToDefault();
-            EnableDefaultWeapon();
-        }
-        else if (activeWeapon != defaultWeapon && defaultWeapon == equippedWeapons[0])
-        {
-            CheckDefaultWeapon();
-            SetEquippedWeaponToDefault();
-        }
-        else
-        {
-            CheckDefaultWeapon();
-        }
-    }
-
-    /* Set default weapon based on level */
-    private void CheckDefaultWeapon()
-    {
-        switch(currentArWeaponLevel)
-        {
-            case 1: 
-                defaultWeapon = assualtRifleL1;
-                break;
-            case 2:
-                defaultWeapon = assualtRifleL2;
-                break;
-            case 3:
-                defaultWeapon = assualtRifleL3;
-                break;
-            case 4:
-                defaultWeapon = assualtRifleL4;
-                break;
-        }
-
-
-        DisableWeaponMesh(assualtRifleL1);
-        DisableWeaponMesh(assualtRifleL2);
-        DisableWeaponMesh(assualtRifleL3);
-        DisableWeaponMesh(assualtRifleL4);
-    }
-
-    private void SetEquippedWeaponToDefault()
-    {
-        equippedWeapons[0] = defaultWeapon;
-    }
-
-    private void EnableDefaultWeapon()
-    {
-        activeWeapon = equippedWeapons[0];
-        EnableWeaponMesh(activeWeapon);
-        SwapCloneWeapon();
-        hud.UpdateWeaponHUD(FindInAllWeaponsSlot(activeWeapon), 0);
-    }
-
-    // Returns the index of weapon entered
-    private int FindInAllWeaponsSlot(GameObject weapon)
-    {
-        int result = 0;
-        for (int i = 0; i < allWeapons.Length; i++)
-        {
-            if (allWeapons[i] == weapon)
-                result = i;
-        }
-        return result;
-    }
 
     void Start()
     {
         hud = FindObjectOfType<HeadsUpDisplay>();
         mainPlayer = FindObjectOfType<Player>();
-
+        /*
         ar = allWeapons[0].GetComponent<AssaultRifle>(); sniper = allWeapons[1].GetComponent<SniperRifle>();
         shotty = allWeapons[2].GetComponent<Shotgun>(); deagle = allWeapons[3].GetComponent<Deagles>();
         stickyBL = allWeapons[4].GetComponent<StickyBombLauncher>(); shredder = allWeapons[5].GetComponent<Shredder>();
         laser = allWeapons[6].GetComponent<LaserBeam>(); cr = allWeapons[7].GetComponent<ChargeRifle>();
         rpg = allWeapons[8].GetComponent<RocketLauncher>();
+        */
+        SetDefaultWeapon();
+        ChangeActiveWeapon(0);
 
-        currentArWeaponLevel = permanantArWeaponLevel;
-        CheckDefaultWeapon();
-        SetEquippedWeaponToDefault();
-        EnableDefaultWeapon();
-
-        foreach (GameObject weapon in allWeapons)
+        foreach (BasicWeapon weapon in allWeapons)
         {
-            DisableWeaponMesh(weapon);
+            weapon.DisableWeapon();
         }
-        DisableWeaponMesh(deadeyeWeapon);
-        EnableWeaponMesh(activeWeapon);
+        deadeyeWeapon.DisableWeapon();
+        activeWeapon.EnableWeapon();
         weaponTimers = new float[equippedWeapons.Length];
     }
 
@@ -197,7 +62,7 @@ public class WeaponsSwitcher : MonoBehaviour
         }
 
         if (!inDeadeye)
-            ChangeWeapon();
+            CheckForSwitchWeaponInput();
         else
             CheckForMissleStrikeClick();
     }
@@ -210,9 +75,9 @@ public class WeaponsSwitcher : MonoBehaviour
         {
             if (weaponTimers[i] > 0)
             {
-                if (activeWeapon == equippedWeapons[i])
+                if (IsActiveWeapon(equippedWeapons[i]))
                 {
-                    if (activeWeapon != defaultWeapon)
+                    if (!IsActiveWeapon(allWeapons[0]))
                     {
                         weaponTimers[i] -= Time.deltaTime;
                         hud.UpdateAmmo(weaponTimers[i], i);
@@ -226,17 +91,14 @@ public class WeaponsSwitcher : MonoBehaviour
                 if (weaponTimers[i] < 0)
                 {
                     // If its the sticky bomb launcher, explode all bombs
-                    if (equippedWeapons[i] == allWeapons[4])
+                    if (IsEquippedWeapon(4))
                         allWeapons[4].SendMessage("DisableWeapon");
 
-                    //remove weapon
-                    // Is is the equipped?
-                    if (activeWeapon == equippedWeapons[i])
+                    // Remove weapon. Is it the active weapon?
+                    if (IsActiveWeapon(equippedWeapons[i]))
                     {
                         RemoveWeaponFromEquipped(i);
-                        activeWeapon = equippedWeapons[0];
-                        activeNumber = 0;
-                        EnableWeaponMesh(activeWeapon);
+                        ChangeActiveWeapon(0);
                         SwapCloneWeapon();
                     }
                     else
@@ -249,28 +111,24 @@ public class WeaponsSwitcher : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Helper function for weapon timers to determine if the the weapon that has no time left is
-    /// the currently equipped weapon or not
-    /// </summary>
-    /// <param name="i"> the index of the weapon in timers </param>
-    private void RemoveWeaponFromEquipped(int i)
+    /// <summary> Helper function for weapon timers to determine if the the weapon that has no time left is the currently equipped weapon or not
+    private void RemoveWeaponFromEquipped(int equipSlot)
     {
-        DisableWeaponMesh(equippedWeapons[i]);
-        if (i == 0)
+        if (equipSlot == 0)
         {
-            equippedWeapons[0] = defaultWeapon;
-            hud.UpdateWeaponHUD(FindInAllWeaponsSlot(defaultWeapon), 0);
+            SetDefaultWeapon();
+            hud.UpdateWeaponHUD(0);
+            hud.UpdateWeaponHUD(0, 0, equippedWeapons[0].GetCurrentLevel());
         }
         else
         {
-            equippedWeapons[i] = null;
-            hud.UpdateWeaponHUD(i);
+            equippedWeapons[equipSlot] = null;
+            hud.UpdateWeaponHUD(equipSlot);
         }
     }
 
     // Checks for one of the keys pressed, if so it will change to that equipped weapon in the array
-    private void ChangeWeapon()
+    private void CheckForSwitchWeaponInput()
     {
         int weaponNumber = -1;
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -287,96 +145,45 @@ public class WeaponsSwitcher : MonoBehaviour
         }
         else if (Input.GetAxis("Mouse ScrollWheel") < 0)
         {
-            if (activeNumber == 0)
+            if (activeSlot == 0)
                 weaponNumber = 2;
             else
-                weaponNumber = activeNumber - 1;
+                weaponNumber = activeSlot - 1;
         }
         else if (Input.GetAxis("Mouse ScrollWheel") > 0)
         {
-            if (activeNumber == 2)
+            if (activeSlot == 2)
                 weaponNumber = 0;
             else
-                weaponNumber = activeNumber + 1;
+                weaponNumber = activeSlot + 1;
         }
 
-        if (weaponNumber != -1)
+        if (weaponNumber != -1 && !WeaponSlotEmpty(weaponNumber))
+            ChangeActiveWeapon(weaponNumber);
+    }
+
+    /// <summary> Enables and switches to the weapon that is equipped given by slot </summary>
+    private void ChangeActiveWeapon(int slot)
+    {
+        activeWeapon = equippedWeapons[slot];
+        activeSlot = slot;
+
+        foreach (BasicWeapon weapon in allWeapons)
         {
-            int wN = weaponNumber;
-            activeNumber = wN;
-
-            if (equippedWeapons[wN] != null)
-            {
-                EnableWeaponMesh(equippedWeapons[wN]);
-
-                activeWeapon = equippedWeapons[wN];
-                SwapCloneWeapon();
-
-                foreach (GameObject weapon in equippedWeapons)
-                {
-                    if (weapon != activeWeapon)
-                        DisableWeaponMesh(weapon);
-                }
-            }
+            if (weapon != null)
+                weapon.DisableWeapon();
         }
+        activeWeapon.EnableWeapon();
+        SwapCloneWeapon();
+        hud.ChangeActiveWeapon(slot);
     }
 
     //Hold Pickup
     public void CollisionWithWeaponPickup(Pickup weapon)
     {
         float weaponTime = weapon.GetTime();
-        int slot = -1;
-        // The following code will find the enum that the weapon pickup was set to
-        // it will then assign the active weapon and the weapon slot it is currently on into those
-        // This is based on a static assignment value for the array of allWeapons
-        // That being so far 
-        //assaultRifle = 0, 
-        //sniperRifle = 1, 
-        //shotgun = 2, 
-        //deagle = 3
-        //grenadeLauncher = 4
-        //shredder = 5
-        //laser = 6
-        //chargeRifle = 7
-        //rpg = 8
-        //polygun = 9
-
-        BasicWeapon.WeaponType wep = weapon.weaponType;
-        switch (wep)
-        {
-            case BasicWeapon.WeaponType.assaultRifle:
-                slot = 0;
-                break;
-            case BasicWeapon.WeaponType.sniperRifle:
-                slot = 1;
-                break;
-            case BasicWeapon.WeaponType.shotgun:
-                slot = 2;
-                break;
-            case BasicWeapon.WeaponType.deagle:
-                slot = 3;
-                break;
-            case BasicWeapon.WeaponType.stickyBombLauncher:
-                slot = 4;
-                break;
-            case BasicWeapon.WeaponType.shredder:
-                slot = 5;
-                break;
-            case BasicWeapon.WeaponType.laser:
-                slot = 6;
-                break;
-            case BasicWeapon.WeaponType.chargeRifle:
-                slot = 7;
-                break;
-            case BasicWeapon.WeaponType.rpg:
-                slot = 8;
-                break;
-            default:
-                Debug.Log("Weapon Switch Error");
-                break;
-        }
-
-        SwitchActiveWeaponAndSlot(slot, weaponTime);
+        int slot = Extra.ConvertFromWeaponTypeToGlobalNumber(weapon.weaponType);
+        ChangeEquippedWeapon(slot, weaponTime);
         Destroy(weapon.gameObject);
     }
 
@@ -384,179 +191,117 @@ public class WeaponsSwitcher : MonoBehaviour
     {
         if (other.GetComponent<WeaponUpgrade>())
         {
-            WeaponUpgrade.WeaponUpgradeType upgradeWeapon = other.GetComponent<WeaponUpgrade>().GetWeaponUpgradeType();
-            switch (upgradeWeapon)
-            {
-                case WeaponUpgrade.WeaponUpgradeType.assaultRifle:
-                    PermanantUpgradeDefaultWeapon();
-                    break;
-                case WeaponUpgrade.WeaponUpgradeType.sniperRifle:
-                    allWeapons[1].GetComponent<BasicWeapon>().PermanantUpgradeWeaponLevel();
-                    break;
-                case WeaponUpgrade.WeaponUpgradeType.shotgun:
-                    allWeapons[2].GetComponent<BasicWeapon>().PermanantUpgradeWeaponLevel();
-                    break;
-                case WeaponUpgrade.WeaponUpgradeType.deagle:
-                    allWeapons[3].GetComponent<BasicWeapon>().PermanantUpgradeWeaponLevel();
-                    break;
-                case WeaponUpgrade.WeaponUpgradeType.stickyBombLauncher:
-                    allWeapons[4].GetComponent<BasicWeapon>().PermanantUpgradeWeaponLevel();
-                    break;
-                case WeaponUpgrade.WeaponUpgradeType.shredder:
-                    allWeapons[5].GetComponent<BasicWeapon>().PermanantUpgradeWeaponLevel();
-                    break;
-                case WeaponUpgrade.WeaponUpgradeType.laser:
-                    allWeapons[6].GetComponent<BasicWeapon>().PermanantUpgradeWeaponLevel();
-                    break;
-                case WeaponUpgrade.WeaponUpgradeType.chargeRifle:
-                    allWeapons[7].GetComponent<BasicWeapon>().PermanantUpgradeWeaponLevel();
-                    break;
-                case WeaponUpgrade.WeaponUpgradeType.rpg:
-                    allWeapons[8].GetComponent<BasicWeapon>().PermanantUpgradeWeaponLevel();
-                    break;
-                default:
-                    Debug.Log("Weapon Upgrade Error");
-                    break;
-            }
+            BasicWeapon.WeaponType type = other.GetComponent<WeaponUpgrade>().GetWeaponType();
+            int slot = Extra.ConvertFromWeaponTypeToGlobalNumber(type);
+            allWeapons[slot].PermanantUpgradeWeaponLevel();
+            hud.ChangeWeaponLevel(slot, allWeapons[slot].GetCurrentLevel());
         }
     }
 
     // Helper function called by weapon pickups to correctly enter into the weapon slot and
     // Increase the time
-    private void SwitchActiveWeaponAndSlot(int slot, float time)
+    private void ChangeEquippedWeapon(int weaponNumber, float time)
     {
-        int weaponSlotToAssign = activeNumber;
-        bool alreadyEquipped = false;
+        print("Weapon NUmber: " + weaponNumber);
+        int weaponSlotToAssign = activeSlot;
         for (int i = 0; i < equippedWeapons.Length; i++)
         {
-            if (equippedWeapons[i] == allWeapons[slot])
+            if (IsEquippedWeapon(weaponNumber))
             {
                 weaponTimers[i] += time / 2;
                 hud.UpdateAmmo(weaponTimers[i], i);
-                alreadyEquipped = true;
                 weaponSlotToAssign = i;
                 activeWeapon = equippedWeapons[weaponSlotToAssign];
                 SwapCloneWeapon();
+                return;
             }
         }
 
-        if (!alreadyEquipped)
+        for (int i = 0; i < equippedWeapons.Length; i++)
         {
-            for (int i = 0; i < equippedWeapons.Length; i++)
+            if (WeaponSlotEmpty(i))
             {
-                if (equippedWeapons[i] == null)
-                {
-                    weaponSlotToAssign = i;
-                    i = equippedWeapons.Length;
-                }
+                weaponSlotToAssign = i;
+                i = equippedWeapons.Length;
             }
-
-            equippedWeapons[weaponSlotToAssign] = allWeapons[slot];
-
-
-            DisableWeaponMesh(activeWeapon);
-            Debug.Log("Disabling: " + activeWeapon.name);
-
-            activeWeapon = equippedWeapons[weaponSlotToAssign];
-            SwapCloneWeapon();
-
-            weaponTimers[weaponSlotToAssign] = time;
-            hud.UpdateAmmo(weaponTimers[weaponSlotToAssign], weaponSlotToAssign);
-
-            EnableWeaponMesh(activeWeapon);
-            hud.UpdateWeaponHUD(slot, weaponSlotToAssign);
         }
-    }
 
-    // These 2 fuctions enable and disable the equippedWeapons meshs and set their active bool to true/false which prevents them from firing
-    // This allows for the firerate to still be in a couroutine as my previous solution was to disable the gameobject entirely.
-    // Now because of polymorphism the only object that are in here are special cases like lights, lasers, and second weapons
-    private void EnableWeaponMesh(GameObject weapon)
-    {
-        BasicWeapon basicWep = weapon.GetComponent<BasicWeapon>();
-        BasicWeapon.WeaponType wepType = basicWep.GetWeaponType();
-        switch (wepType)
-        {
-            case BasicWeapon.WeaponType.sniperRifle:
-                Light[] sniperLights = weapon.GetComponentsInChildren<Light>();
-                foreach (Light light in sniperLights)
-                {
-                    light.enabled = true;
-                }
-                LineRenderer[] lines = weapon.GetComponentsInChildren<LineRenderer>();
-                foreach (LineRenderer line in lines)
-                {
-                    line.enabled = true;
-                }
-                break;
-            case BasicWeapon.WeaponType.deagle:
-                deagle.SetSecondWeapon();
-                break;
-            case BasicWeapon.WeaponType.laser:
-                Light[] laserLights = weapon.GetComponentsInChildren<Light>();
-                foreach (Light light in laserLights)
-                {
-                    light.enabled = true;
-                }
-                break;
-        }
-        basicWep.active = true;
+        if (!WeaponSlotEmpty(weaponSlotToAssign))
+            equippedWeapons[weaponSlotToAssign].DisableWeapon();
+        equippedWeapons[weaponSlotToAssign] = allWeapons[weaponNumber];
 
-        MeshRenderer[] objects = weapon.GetComponentsInChildren<MeshRenderer>();
-        foreach (MeshRenderer obj in objects)
-        {
-            obj.enabled = true;
-        }
-    }
-
-    private void DisableWeaponMesh(GameObject weapon)
-    {
-        if (weapon != null)
-        {
-            BasicWeapon basicWep = weapon.GetComponent<BasicWeapon>();
-            BasicWeapon.WeaponType wepType = basicWep.GetWeaponType();
-            switch (wepType)
-            {
-                case BasicWeapon.WeaponType.sniperRifle:
-                    Light[] sniperLights = weapon.GetComponentsInChildren<Light>();
-                    foreach (Light light in sniperLights)
-                    {
-                        light.enabled = false;
-                    }
-                    LineRenderer[] lines = weapon.GetComponentsInChildren<LineRenderer>();
-                    foreach (LineRenderer line in lines)
-                    {
-                        line.enabled = false;
-                    }
-                    break;
-                case BasicWeapon.WeaponType.deagle:
-                    break;
-                case BasicWeapon.WeaponType.laser:
-                    laser.DisableLaser();
-                    Light[] laserLights = weapon.GetComponentsInChildren<Light>();
-                    foreach (Light light in laserLights)
-                    {
-                        light.enabled = false;
-                    }
-                    break;
-                case BasicWeapon.WeaponType.chargeRifle:
-                    cr.StartCoroutine("FireCharge");
-                    break;
-            }
-
-            MeshRenderer[] objects = weapon.GetComponentsInChildren<MeshRenderer>();
-            foreach (MeshRenderer obj in objects)
-            {
-                obj.enabled = false;
-            }
-            basicWep.active = false;
-        }
+        ChangeActiveWeapon(weaponSlotToAssign);
+        weaponTimers[weaponSlotToAssign] = time;
+        hud.UpdateAmmo(weaponTimers[weaponSlotToAssign], weaponSlotToAssign);
+        hud.UpdateWeaponHUD(weaponNumber, activeSlot, activeWeapon.GetCurrentLevel());
     }
 
     public BasicWeapon GetActiveWeapon()
     {
         return activeWeapon.GetComponent<BasicWeapon>();
     }
+
+    private void SetDefaultWeapon()
+    {
+        equippedWeapons[0] = allWeapons[0];
+    }
+
+    bool IsActiveWeapon(BasicWeapon weapon)
+    {
+        return activeWeapon == weapon;
+    }
+
+    bool IsEquippedWeapon(BasicWeapon weapon)
+    {
+        for (int i = 0; i < equippedWeapons.Length; i++)
+        {
+            if (equippedWeapons[i] == weapon)
+                return true;
+        }
+        return false;
+    }
+
+    /// <summary> Uses GLOBAL WEAPON NUMBER to return whether that weapon is equipped or not </summary>
+    bool IsEquippedWeapon(int number)
+    {
+        for (int i = 0; i < equippedWeapons.Length; i++)
+        {
+            if (equippedWeapons[i] == allWeapons[number])
+                return true;
+        }
+        return false;
+    }
+
+    bool WeaponSlotEmpty(int slotToCheck)
+    {
+        return equippedWeapons[slotToCheck] == null;
+    }
+
+    int GetWeaponNumber(BasicWeapon weapon)
+    {
+        return Extra.ConvertFromWeaponTypeToGlobalNumber(weapon.GetWeaponType());
+    }
+
+    /// <summary> Return equip number slot of global weapon number passed in </summary>
+    int GetEquipNumberSlot(int wepNum)
+    {
+        for (int i = 0; i < equippedWeapons.Length; i++)
+        {
+            if (equippedWeapons[i] == allWeapons[wepNum])
+                return i;
+        }
+        return -1;
+    }
+
+
+
+
+
+
+
+
+
+
 
 
     // InfiniteAmmo Pickup
@@ -565,7 +310,7 @@ public class WeaponsSwitcher : MonoBehaviour
         StartCoroutine("SetInfniteAmmo", timeAmount);
     }
 
-    IEnumerator SetInfniteAmmo(float timeAmount)
+    IEnumerator SetInfiniteAmmo(float timeAmount)
     {
         infniteAmmoCurrently = true;
         yield return new WaitForSeconds(timeAmount);
@@ -585,9 +330,9 @@ public class WeaponsSwitcher : MonoBehaviour
     {
         Time.timeScale = 0.01f;
         Time.fixedDeltaTime = Time.timeScale * 0.02f;
-        lastWeaponEquipped = activeNumber;
-        DisableWeaponMesh(activeWeapon);
-        EnableWeaponMesh(deadeyeWeapon);
+        lastWeaponEquipped = activeSlot;
+        activeWeapon.DisableWeapon();
+        deadeyeWeapon.EnableWeapon();
         yield return new WaitForSecondsRealtime(time);
         StartCoroutine("ExecuteMissleStrike");
     }
@@ -612,47 +357,46 @@ public class WeaponsSwitcher : MonoBehaviour
 
     IEnumerator ExecuteMissleStrike()
     {
-        FindObjectOfType<Player>().lookingAtMouse = false;
+        GlobalClass.player.lookingAtMouse = false;
         transform.LookAt(targetPosition);
         Instantiate(explosion, targetPosition, Quaternion.identity);
-        print("spawn");
         yield return new WaitForSecondsRealtime(0.75f);
-        FindObjectOfType<Player>().lookingAtMouse = true;
-        EnableWeaponMesh(equippedWeapons[lastWeaponEquipped]);
-        DisableWeaponMesh(deadeyeWeapon);
+        GlobalClass.player.lookingAtMouse = true;
+        equippedWeapons[lastWeaponEquipped].EnableWeapon();
+        deadeyeWeapon.DisableWeapon();
         positionChosen = false;
         inDeadeye = false;
         Time.timeScale = 1;
         Time.fixedDeltaTime = Time.timeScale * 0.02f;
     }
-    
+
 
     // TimeField
     public void SpeedUpFireRates(float factor)
     {
-        foreach (GameObject weapon in allWeapons)
+        foreach (BasicWeapon weapon in allWeapons)
         {
-            weapon.GetComponent<BasicWeapon>().SpeedUpFireRate(factor);
+            weapon.SpeedUpFireRate(factor);
         }
     }
 
     public void SpeedDownFireRates(float factor)
     {
-        foreach (GameObject weapon in allWeapons)
+        foreach (BasicWeapon weapon in allWeapons)
         {
-            weapon.GetComponent<BasicWeapon>().SpeedDownFireRate(factor);
+            weapon.SpeedDownFireRate(factor);
         }
     }
 
     // Gives current weapon and projectile of active weapon to each clone that exists
     public void SwapCloneWeapon()
     {
-        GameObject projectile = activeWeapon.GetComponent<BasicWeapon>().GetProjectile();
+        GameObject projectile = activeWeapon.GetProjectile();
         foreach (Clone clone in mainPlayer.allActiveClones)
         {
-            clone.SwitchActiveWeapon(FindInAllWeaponsSlot(activeWeapon), 
-                projectile, 
-                activeWeapon.GetComponent<BasicWeapon>().GetCurrentLevel());
+            clone.SwitchActiveWeapon(GetWeaponNumber(activeWeapon),
+                projectile,
+                activeWeapon.GetCurrentLevel());
         }
     }
 
@@ -660,11 +404,12 @@ public class WeaponsSwitcher : MonoBehaviour
     // Upgrade
     public void UpgradeAllWeapons(float time)
     {
-        TemporaryUpgradeDefaultWeapon(time);
-        foreach(GameObject wep in allWeapons)
+        for (int i = 0; i < allWeapons.Length; i++)
         {
-            if (wep != assualtRifleL1 && wep != assualtRifleL2 && wep != assualtRifleL3 && wep != assualtRifleL4)
-                wep.GetComponent<BasicWeapon>().TemporaryUpgradeWeaponLevel(time);
+            allWeapons[i].TemporaryUpgradeWeaponLevel(time);
+            int equipNum = GetEquipNumberSlot(i);
+            if (equipNum != -1)
+                hud.ChangeWeaponLevel(equipNum, equippedWeapons[equipNum].GetCurrentLevel());
         }
         SwapCloneWeapon();
         StartCoroutine("UpgradeTimer", time);
@@ -673,6 +418,14 @@ public class WeaponsSwitcher : MonoBehaviour
     IEnumerator UpgradeTimer(float time)
     {
         yield return new WaitForSeconds(time + 0.05f);
+        for (int i = 0; i < equippedWeapons.Length; i++)
+        {
+            if (!WeaponSlotEmpty(i))
+            {
+                print(equippedWeapons[i].GetCurrentLevel());
+                hud.ChangeWeaponLevel(i, equippedWeapons[i].GetCurrentLevel());
+            }
+        }
         SwapCloneWeapon();
     }
 }

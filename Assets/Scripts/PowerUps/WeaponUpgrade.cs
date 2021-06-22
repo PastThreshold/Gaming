@@ -4,21 +4,9 @@ using UnityEngine;
 
 public class WeaponUpgrade : MonoBehaviour
 {
-    public enum WeaponUpgradeType
-    {
-        // Upgrade Type
-        assaultRifle,
-        sniperRifle,
-        shotgun,
-        deagle,
-        stickyBombLauncher,
-        shredder,
-        laser,
-        chargeRifle,
-        rpg,
-    }
 
-    [SerializeField] WeaponUpgradeType weaponUpgradeType;
+
+    [SerializeField] BasicWeapon.WeaponType weaponType;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -26,8 +14,8 @@ public class WeaponUpgrade : MonoBehaviour
             Destroy(gameObject);
     }
 
-    public WeaponUpgradeType GetWeaponUpgradeType()
+    public BasicWeapon.WeaponType GetWeaponType()
     {
-        return weaponUpgradeType;
+        return weaponType;
     }
 }

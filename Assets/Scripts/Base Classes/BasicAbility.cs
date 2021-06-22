@@ -26,7 +26,7 @@ public class BasicAbility : MonoBehaviour
     [Header("Basic Ability Data")]
     [SerializeField] protected abilityType type;
     [Range(1, 4)] [SerializeField] protected int permanantAbilityLevel = 1;
-                                                     protected int currentAbilityLevel = 1;
+                                   protected int currentAbilityLevel = 1;
     bool temporaryLevelUpgrade = false;
 
     protected void BaseStart()

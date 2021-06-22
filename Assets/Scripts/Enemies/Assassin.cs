@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Assassin : MonoBehaviour
+public class Assassin : Enemy
 {
     [Header("Base")]
     [SerializeField] float blinkDamage = 50f;
@@ -57,6 +57,7 @@ public class Assassin : MonoBehaviour
 
     void Start()
     {
+        BaseStart();
         if (teleportCharges == teleChargeMax)
             atMaxCharge = true;
 
@@ -66,6 +67,7 @@ public class Assassin : MonoBehaviour
 
     void Update()
     {
+        BaseUpdate();
         if (atMaxCharge && !lethalDash && !lethalBlinking)
         {
             Vector3 directionToPlayer = player.transform.position - transform.position;

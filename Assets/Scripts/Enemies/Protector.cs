@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -16,6 +17,8 @@ public class Protector : Enemy
     Protector targetProtector;
     bool protecting;
     bool waitingToProtect;
+    [SerializeField] bool alwaysMove = true;
+    [SerializeField] bool stayBehindShield = true;
 
     [SerializeField] float withinDistanceLargeShield = 150f;
     protected bool withinDistanceLS = false;
@@ -75,9 +78,10 @@ public class Protector : Enemy
     /// </summary>
     void Update()
     {
-
         if (protecting)
         {
+            if (!CheckProtectorHasTarget()) return;
+
             if (normalShield.gameObject.activeSelf)
                 CalculateNormalShield();
             if (groupProtecting && isMainComputer) // If the protectors are shielding eachother and it is the main calculator
@@ -105,8 +109,40 @@ public class Protector : Enemy
         if (inFormation)
             return;
 
-        if (!randomMovementCooldown)
+        if (protecting && alwaysMove)
+            DodgeMovement();
+        else if (protecting && stayBehindShield)
+            BehindShieldMovement();
+        else if (!randomMovementCooldown)
             StartCoroutine(MoveRandomly());
+    }
+
+    private void BehindShieldMovement()
+    {
+        if (protectionMovement) return;
+        Vector3 playerToTarget = targetToProtect.transform.position - playerPos;
+        Vector3 positionBehindTarget = Quaternion.Euler(0, UnityEngine.Random.Range(-30f, 30f), 0) * playerToTarget.normalized;
+        positionBehindTarget = positionBehindTarget * UnityEngine.Random.Range(2f, 5f) + playerToTarget + playerPos;
+        Move(positionBehindTarget);
+        StartCoroutine(ProtectionMovementTimer(0.75f));
+    }
+
+    private void DodgeMovement()
+    {
+        if (protectionMovement) return;
+        if ((targetToProtect.transform.position - transform.position).sqrMagnitude > distanceToStayWithinTarget)
+        {
+            Vector3 position = Extra.CreateRandomVectorWithMagnitude(0.25f, 1.5f) + targetToProtect.transform.position;
+            Move(position);
+            StartCoroutine(ProtectionMovementTimer(1.25f));
+        }
+        else
+        {
+            Vector3 position = Extra.CreateRandomVectorWithMagnitude(0.5f, 1.75f);
+            Move(position);
+            StartCoroutine(ProtectionMovementTimer(0.25f));
+        }
+        
     }
 
 
@@ -119,11 +155,11 @@ public class Protector : Enemy
         if (Extra.RollChance(chanceToProtect))
         {
             Enemy chosenEnemy;
-            chosenEnemy = LevelController.allEnemiesInScene[Random.Range(0, LevelController.allEnemiesInScene.Count)];
+            chosenEnemy = LevelController.allEnemiesInScene[UnityEngine.Random.Range(0, LevelController.allEnemiesInScene.Count)];
             int safetyBreak = 0;
             while (chosenEnemy.gameObject == gameObject)
             {
-                chosenEnemy = LevelController.allEnemiesInScene[Random.Range(0, LevelController.allEnemiesInScene.Count)];
+                chosenEnemy = LevelController.allEnemiesInScene[UnityEngine.Random.Range(0, LevelController.allEnemiesInScene.Count)];
                 if (Extra.CheckSafetyBreak(safetyBreak, 20))
                 {
                     Debug.Log("Infinite Loop Safety Break Triggered");
@@ -200,10 +236,10 @@ public class Protector : Enemy
         }
     }
 
-    IEnumerator ProtectionMovementTimer() 
+    IEnumerator ProtectionMovementTimer(float timer) 
     {
         protectionMovement = true;
-        yield return new WaitForSeconds(protectionMovementCooldown); 
+        yield return new WaitForSeconds(timer); 
         protectionMovement = false; 
     }
 
@@ -212,6 +248,7 @@ public class Protector : Enemy
         normalShield.transform.position = targetToProtect.transform.position;
         if (inFormation)
             return;
+        /*
         if (!protectionMovement)
         {
             if ((targetToProtect.transform.position - transform.position).sqrMagnitude > distanceToStayWithinTarget)
@@ -223,7 +260,7 @@ public class Protector : Enemy
                 Move(positionBehindTarget);
                 StartCoroutine(ProtectionMovementTimer());
             }
-        }
+        }*/
     }
 
     /// <summary>
@@ -268,10 +305,10 @@ public class Protector : Enemy
         {
             StopRandomMovement();
             Vector3 positionToMove = Quaternion.Euler(0, 90f, 0) * (playerPos - transform.position).normalized 
-                * Random.Range(2f, 5f);
+                * UnityEngine.Random.Range(2f, 5f);
             Move(positionToMove + transform.position);
             targetProtector.Move(positionToMove + targetProtector.transform.position);
-            StartCoroutine(ProtectionMovementTimer());
+            StartCoroutine(ProtectionMovementTimer(2.5f));
         }
     }
 
@@ -439,6 +476,17 @@ public class Protector : Enemy
         Move(postion);
     }
 
+    private bool CheckProtectorHasTarget()
+    {
+        if (targetToProtect == null)
+        {
+            groupProtecting = false;
+            protecting = false;
+            waitingToProtect = false;
+        }
+        return true;
+    }
+
     public void UpdateGroupProtection(Vector3 position)
     {
         Move(position);
@@ -447,6 +495,7 @@ public class Protector : Enemy
     public override void EndFomation()
     {
         base.EndFomation();
+        groupProtecting = false;
         randomMovementCooldown = false;
         canShoot = true;
     }

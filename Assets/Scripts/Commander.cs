@@ -17,8 +17,6 @@ public class Commander : Enemy
     bool buffing = false;
     bool buffOnCooldown = false;
 
-    bool randomMovementCooldown = false;
-    bool movingRandomly = false;
     [SerializeField] LineRenderer tetherPrefab;
     public List<LineRenderer> tethers;
 
@@ -31,8 +29,7 @@ public class Commander : Enemy
 
     private void Update()
     {
-        playerPosPrev = playerPos;
-        playerPos = player.transform.position;
+        BaseUpdate();
         if (inFormation)
         {
             switch (activeBehavior)
@@ -48,13 +45,30 @@ public class Commander : Enemy
         else
         {
             if (!randomMovementCooldown)
-                StartCoroutine("MoveRandomly");
+            {
+                if (Extra.RollChance(0f))
+                    StartCoroutine(MoveRandomly());
+                else
+                {
+                    Vector3 position = CheckForGroup();
+                    if (position != Vector3.zero)
+                    {
+                        Move(position, MovementReason.commanderIntoGroup);
+                        randomMovementCooldown = true;
+                    }
+                    else
+                        StartCoroutine(MoveRandomly());
+                }
+            }
             if (canShoot)
-                StartCoroutine("Shoot");
+                StartCoroutine(Shoot());
             if (CheckIfAtEndOfPath())
+            {
+                HandleMovementReason();
                 StopMovement();
+            }
             if (!buffOnCooldown)
-                StartCoroutine("BuffCooldown");
+                StartCoroutine(BuffCooldown());
         }
 
         if (buffing)
@@ -70,59 +84,42 @@ public class Commander : Enemy
         transform.LookAt(Extra.SetYToTransform(player.transform.position, transform));
     }
 
-    IEnumerator BuffCooldown()
+
+    /// <summary> Will test a random enemies on the scene if there is a group of enemies near them </summary>
+    private Vector3 CheckForGroup()
+    {
+        Vector3 middlePoint = Vector3.zero;
+        List<Enemy> enemies = LevelController.allEnemiesInScene;
+        int rand = UnityEngine.Random.Range(0, enemies.Count);
+        List<Enemy> enemiesTogether = Extra.GetEnemiesFromPhysicsOverLapSphere(
+            enemies[rand].transform.position, 6.5f, GlobalClass.exD.enemiesOnlyLM);
+        Extra.DrawStrangeOutCenterThing(enemies[rand].transform.position, 13f, Color.blue, 10f);
+        if (enemiesTogether.Count >= 3)
+        {
+            middlePoint = Extra.FindCenterOfListOfEnemies(enemiesTogether);
+            middlePoint += (middlePoint - playerPos).normalized;
+        }
+        return middlePoint;
+    }
+
+    IEnumerator Buff()
     {
         buffOnCooldown = true;
         buffing = true;
         activeBuffedEnemies = Extra.GetEnemiesFromPhysicsOverLapSphere(transform.position, 8f, GlobalClass.exD.enemiesOnlyLM);
-        activeBuffedEnemies.Remove(this);
+        activeBuffedEnemies.Remove(this); // Will add itself to list so must be removed first
         UpdateBuff(true);
         yield return new WaitForSeconds(buffDuration);
+        StartCoroutine(BuffCooldown());
+    }
+
+    IEnumerator BuffCooldown()
+    {
         buffing = false;
         UpdateBuff(false);
         ClearBuffedEnemies();
         yield return new WaitForSeconds(buffCooldown);
         buffOnCooldown = false;
-    }
-
-    /// <summary>
-    /// Will decide a random endpoint and midpoint, then move along a bezier curve to randomize its movement
-    /// </summary>
-    IEnumerator MoveRandomly()
-    {
-        movingRandomly = true;
-        randomMovementCooldown = true;
-        Vector3 start = transform.position;
-        Vector3 endPos = start + Extra.CreateRandomVectorWithMagnitude(15f, 15f);
-        Vector3 middlePoint = start + Quaternion.Euler(0, 90f, 0) * (endPos - start).normalized * UnityEngine.Random.Range(7f, 12f);
-        middlePoint += (endPos - start).normalized * UnityEngine.Random.Range(7f, 12f);
-        if (NavMesh.SamplePosition(endPos, out NavMeshHit hit, 2f, NavMesh.AllAreas))
-        {
-            endPos = hit.position;
-        }
-        else
-        {
-            NavMesh.FindClosestEdge(endPos, out NavMeshHit edge, NavMesh.AllAreas);
-            endPos = edge.position;
-        }
-
-        Vector3 posToMoveTo;
-        for (float i = 0f; i < 1f; i += 0.01f)
-        {
-            posToMoveTo = Extra.CalculateQuadraticBezierCurve(i, start, middlePoint, endPos);
-            Move(posToMoveTo);
-            yield return new WaitForSeconds(0.01f);
-        }
-
-
-        movingRandomly = false;
-        StartCoroutine("RandomMovementCooldown");
-    }
-
-    IEnumerator RandomMovementCooldown()
-    {
-        yield return new WaitForSeconds(UnityEngine.Random.Range(1f, 2f));
-        randomMovementCooldown = false;
     }
 
     IEnumerator Shoot()
@@ -189,7 +186,7 @@ public class Commander : Enemy
         {
             print("Buffing: " + enemy.name);
             enemy.AddCommander(gameObject, this, damageIncreaseFactor);
-            //enemy.ChangeDamageChangeFactor(gameObject, damageIncreaseFactor);
+            enemy.AddDamageChangeFactor(gameObject, damageIncreaseFactor);
         }
     }
 
@@ -216,6 +213,21 @@ public class Commander : Enemy
         activeBuffedEnemies.RemoveAt(index);
         Destroy(tethers[index]);
         tethers.RemoveAt(index);
+    }
+
+    private void HandleMovementReason()
+    {
+        MovementReason reason = GetCurrentMovementReason();
+        switch (reason)
+        {
+            case MovementReason.commanderIntoGroup:
+                if (buffing)
+                    StopCoroutine(Buff());
+                else if (buffOnCooldown)
+                    StopCoroutine(BuffCooldown());
+                StartCoroutine(Buff());
+                break;
+        }
     }
 
     protected override void OnDeath()

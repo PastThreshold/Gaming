@@ -129,6 +129,7 @@ public class Enrage : BasicAbility, AbilityADT
                         enrageEffects.SetActive(true);
                         enrageEffects2.SetActive(true);
                     }
+                    AbilityInUse();
                     StartCoroutine("Cooldown");
                 }
             }
@@ -149,6 +150,7 @@ public class Enrage : BasicAbility, AbilityADT
         healEffects2.SetActive(false);
         enrageEffects.SetActive(false);
         enrageEffects2.SetActive(false);
+        AbilityNotInUse();
         StartCoroutine("Cooldown");
     }
 

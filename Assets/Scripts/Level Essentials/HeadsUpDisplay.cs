@@ -6,14 +6,8 @@ using UnityEngine.UI;
 public class HeadsUpDisplay : MonoBehaviour
 {
     [SerializeField] GameObject container;
-    [SerializeField] GameObject slot1;
-    GameObject equippedWeaponImage1;
-    [SerializeField] GameObject slot2;
-    GameObject equippedWeaponImage2;
-    [SerializeField] GameObject slot3;
-    GameObject equippedWeaponImage3;
 
-    [SerializeField] GameObject[] weaponImages;
+    [SerializeField] Image[] weaponImages;
 
     [SerializeField] Slider healthBar;
     [SerializeField] Text ammo1;
@@ -28,21 +22,21 @@ public class HeadsUpDisplay : MonoBehaviour
     [SerializeField] Image crosshair;
 
     [Header("Abilities")]
-    [SerializeField] GameObject abilitySlot1;
-    [SerializeField] GameObject abilitySlot2;
-    [SerializeField] GameObject abilitySlot3;
-    GameObject AssignedSpriteSlot1;
-    GameObject AssignedSpriteSlot2;
-    GameObject AssignedSpriteSlot3;
-    [SerializeField] GameObject blinkSprite;
-    [SerializeField] GameObject autoTargetSprite;
-    [SerializeField] GameObject deflectSprite;
-    [SerializeField] GameObject shieldSprite;
-    [SerializeField] GameObject holdSprite;
-    [SerializeField] GameObject grappleSprite;
-    [SerializeField] GameObject bulletTimeSprite;
-    [SerializeField] GameObject enrageSprite;
-    [SerializeField] GameObject pushPullSprite;
+    [SerializeField] HUDSlot abilitySlot1;
+    [SerializeField] HUDSlot abilitySlot2;
+    [SerializeField] HUDSlot abilitySlot3;
+    [SerializeField] HUDSlot wepSlot1;
+    [SerializeField] HUDSlot wepSlot2;
+    [SerializeField] HUDSlot wepSlot3;
+    [SerializeField] Image blinkSprite;
+    [SerializeField] Image autoTargetSprite;
+    [SerializeField] Image deflectSprite;
+    [SerializeField] Image shieldSprite;
+    [SerializeField] Image holdSprite;
+    [SerializeField] Image grappleSprite;
+    [SerializeField] Image bulletTimeSprite;
+    [SerializeField] Image enrageSprite;
+    [SerializeField] Image pushPullSprite;
 
     [SerializeField] GameObject autoTargetCrosshair;
     float crosshairRotationSpeed = 125f;
@@ -74,43 +68,18 @@ public class HeadsUpDisplay : MonoBehaviour
             autoTargetCrosshair.SetActive(false);
     }
 
-    public void UpdateWeaponHUD(int weaponSpot, int slot)
+    public void UpdateWeaponHUD(int weaponSpot, int slot, int level)
     {
-        weaponImages[weaponSpot].SetActive(true);
         switch (slot)
         {
             case 0:
-                if (equippedWeaponImage1 != null)
-                {
-                    equippedWeaponImage1.SetActive(false);
-                    equippedWeaponImage1.transform.parent = container.transform;
-                }
-
-                equippedWeaponImage1 = weaponImages[weaponSpot];
-                equippedWeaponImage1.transform.SetParent(slot1.transform);
-                equippedWeaponImage1.transform.position = slot1.transform.position;
+                wepSlot1.AssignWeapon(weaponImages[weaponSpot], level);
                 break;
             case 1:
-                if (equippedWeaponImage2 != null)
-                {
-                    equippedWeaponImage2.SetActive(false);
-                    equippedWeaponImage2.transform.parent = container.transform;
-                }
-
-                equippedWeaponImage2 = weaponImages[weaponSpot];
-                equippedWeaponImage2.transform.SetParent(slot2.transform);
-                equippedWeaponImage2.transform.position = slot2.transform.position;
+                wepSlot2.AssignWeapon(weaponImages[weaponSpot], level);
                 break;
             case 2:
-                if (equippedWeaponImage3 != null)
-                {
-                    equippedWeaponImage3.SetActive(false);
-                    equippedWeaponImage3.transform.parent = container.transform;
-                }
-
-                equippedWeaponImage3 = weaponImages[weaponSpot];
-                equippedWeaponImage3.transform.SetParent(slot3.transform);
-                equippedWeaponImage3.transform.position = slot3.transform.position;
+                wepSlot3.AssignWeapon(weaponImages[weaponSpot], level);
                 break;
         }
     }
@@ -120,18 +89,52 @@ public class HeadsUpDisplay : MonoBehaviour
         switch (slot)
         {
             case 0:
-                equippedWeaponImage1.SetActive(false);
-                equippedWeaponImage1 = null;
+                wepSlot1.UnassignWeapon();
                 break;
             case 1:
-                equippedWeaponImage2.SetActive(false);
-                equippedWeaponImage2 = null;
+                wepSlot2.UnassignWeapon();
                 break;
             case 2:
-                equippedWeaponImage3.SetActive(false);
-                equippedWeaponImage3 = null;
+                wepSlot3.UnassignWeapon();
                 break;
         }
+    }
+
+    public void ChangeWeaponLevel(int slot, int level)
+    {
+        print("slot: " + slot + " level: " + level);
+        switch (slot)
+        {
+            case 0:
+                wepSlot1.ChangeBorderColor(level);
+                break;
+            case 1:
+                wepSlot2.ChangeBorderColor(level);
+                break;
+            case 2:
+                wepSlot3.ChangeBorderColor(level);
+                break;
+        }
+    }
+
+    public void ChangeActiveWeapon(int slot)
+    {
+        wepSlot1.ChangeBorderOpacity(false);
+        wepSlot2.ChangeBorderOpacity(false);
+        wepSlot3.ChangeBorderOpacity(false);
+        switch (slot)
+        {
+            case 0:
+                wepSlot1.ChangeBorderOpacity(true);
+                break;
+            case 1:
+                wepSlot2.ChangeBorderOpacity(true);
+                break;
+            case 2:
+                wepSlot3.ChangeBorderOpacity(true);
+                break;
+        }
+                
     }
 
     public void UpdateHealth(float newHealth)
@@ -158,34 +161,35 @@ public class HeadsUpDisplay : MonoBehaviour
 
     public void UpdateAbilites(int key, BasicAbility.abilityType type)
     {
+        print(key + " + " + type);
         switch(type)
         {
             case BasicAbility.abilityType.blink:
-                AssignSpriteToSlot(key, blinkSprite);
+                AssignSpriteToSlot(key, blinkSprite, type);
                 break;
             case BasicAbility.abilityType.autoTarget:
-                AssignSpriteToSlot(key, autoTargetSprite);
+                AssignSpriteToSlot(key, autoTargetSprite, type);
                 break;
             case BasicAbility.abilityType.deflect:
-                AssignSpriteToSlot(key, deflectSprite);
+                AssignSpriteToSlot(key, deflectSprite, type);
                 break;
             case BasicAbility.abilityType.shield:
-                AssignSpriteToSlot(key, shieldSprite);
+                AssignSpriteToSlot(key, shieldSprite, type);
                 break;
             case BasicAbility.abilityType.bulletTime:
-                AssignSpriteToSlot(key, bulletTimeSprite);
+                AssignSpriteToSlot(key, bulletTimeSprite, type);
                 break;
             case BasicAbility.abilityType.enrage:
-                AssignSpriteToSlot(key, enrageSprite);
+                AssignSpriteToSlot(key, enrageSprite, type);
                 break;
             case BasicAbility.abilityType.grapple:
-                AssignSpriteToSlot(key, grappleSprite);
+                AssignSpriteToSlot(key, grappleSprite, type);
                 break;
             case BasicAbility.abilityType.holdPickup:
-                AssignSpriteToSlot(key, holdSprite);
+                AssignSpriteToSlot(key, holdSprite, type);
                 break;
             case BasicAbility.abilityType.pushPull:
-                AssignSpriteToSlot(key, pushPullSprite);
+                AssignSpriteToSlot(key, pushPullSprite, type);
                 break;
             default:
                 Debug.Log("Unimplemented Ability");
@@ -193,31 +197,20 @@ public class HeadsUpDisplay : MonoBehaviour
         }
     }
 
-    private void AssignSpriteToSlot(int key, GameObject sprite)
+    private void AssignSpriteToSlot(int key, Image sprite, BasicAbility.abilityType type)
     {
         switch(key)
         {
             case AbilitySwitcher.SPACEINT:
-                sprite.transform.position = abilitySlot1.transform.position;
-                if (AssignedSpriteSlot1 != null)
-                    AssignedSpriteSlot1.SetActive(false);
-                AssignedSpriteSlot1 = sprite;
+                abilitySlot1.AssignAbility(sprite, type);
                 break;
             case AbilitySwitcher.EINT:
-                sprite.transform.position = abilitySlot2.transform.position;
-                if (AssignedSpriteSlot2 != null)
-                    AssignedSpriteSlot2.SetActive(false);
-                AssignedSpriteSlot2 = sprite;
+                abilitySlot2.AssignAbility(sprite, type);
                 break;
             case AbilitySwitcher.RMBINT:
-                sprite.transform.position = abilitySlot3.transform.position;
-                if (AssignedSpriteSlot3 != null)
-                    AssignedSpriteSlot3.SetActive(false);
-                AssignedSpriteSlot3 = sprite;
+                abilitySlot3.AssignAbility(sprite, type);
                 break;
         }
-
-        sprite.SetActive(true);
     }
 
     public void RemoveAbility(int key)
@@ -225,16 +218,13 @@ public class HeadsUpDisplay : MonoBehaviour
         switch (key)
         {
             case AbilitySwitcher.SPACEINT:
-                AssignedSpriteSlot1.SetActive(false);
-                AssignedSpriteSlot1 = null;
+                abilitySlot1.UnassignAbility();
                 break;
             case AbilitySwitcher.EINT:
-                AssignedSpriteSlot2.SetActive(false);
-                AssignedSpriteSlot2 = null;
+                abilitySlot2.UnassignAbility();
                 break;
             case AbilitySwitcher.RMBINT:
-                AssignedSpriteSlot3.SetActive(false);
-                AssignedSpriteSlot3 = null;
+                abilitySlot3.UnassignAbility();
                 break;
         }
     }
@@ -245,7 +235,7 @@ public class HeadsUpDisplay : MonoBehaviour
     /// </summary>
     private Image FindSpriteFromType(BasicAbility.abilityType type)
     {
-        GameObject sprite = null;
+        Image sprite = null;
         switch (type)
         {
             case BasicAbility.abilityType.blink:
@@ -279,67 +269,37 @@ public class HeadsUpDisplay : MonoBehaviour
                 Debug.Log("Unimplemented Ability");
                 break;
         }
-
-        Image flashSprite = sprite.transform.GetChild(0).GetComponent<Image>();
-        return flashSprite;
+        return sprite;
     }
 
-
+    private HUDSlot FindCurrentlyEquippedSlot(BasicAbility.abilityType type)
+    {
+        if (abilitySlot1.IsAssigned(type)) return abilitySlot1;
+        if (abilitySlot2.IsAssigned(type)) return abilitySlot2;
+        if (abilitySlot3.IsAssigned(type)) return abilitySlot3;
+        return null;
+    }
 
     public void AbilityInUse(BasicAbility.abilityType type)
     {
-        Image flashSprite = FindSpriteFromType(type);
-        print("Sprite: " + flashSprite.name);
-        StartCoroutine(FlashAbilityImage(flashSprite, true));
+        print("called this");
+        HUDSlot slotToCall = FindCurrentlyEquippedSlot(type);
+        if (slotToCall)
+            slotToCall.ChangeBorderOpacity(true);
     }
 
     public void AbilityNotInUse(BasicAbility.abilityType type)
     {
-        Image flashSprite = FindSpriteFromType(type);
-        print("Sprite: " + flashSprite.name);
-        StartCoroutine(FlashAbilityImage(flashSprite, false));
+        HUDSlot slotToCall = FindCurrentlyEquippedSlot(type);
+        if (slotToCall)
+            slotToCall.ChangeBorderOpacity(false);
     }
 
     public void AbilityImmediateUse(BasicAbility.abilityType type)
     {
-        Image flashSprite = FindSpriteFromType(type);
-        print("Sprite: " + flashSprite.name);
-        StartCoroutine(FlashAbilityImage(flashSprite));
-    }
-
-    IEnumerator FlashAbilityImage(Image image, bool increase)
-    {
-        Color imageColor = image.color;
-        for (float i = 0; i < 0.35f; i += Time.unscaledDeltaTime)
-        {
-            yield return new WaitForSecondsRealtime(0.01f);
-            if (increase)
-                imageColor.a += Time.unscaledDeltaTime * 2.85f;
-            else
-                imageColor.a -= Time.unscaledDeltaTime * 2.85f;
-            image.color = imageColor;
-            print(imageColor.ToString());
-        }
-    }
-
-    IEnumerator FlashAbilityImage(Image image)
-    {
-        Color imageColor = image.color;
-        for (float i = 0; i < 0.1f; i += Time.unscaledDeltaTime)
-        {
-            yield return new WaitForSecondsRealtime(0.01f);
-            imageColor.a += Time.unscaledDeltaTime * 10;
-
-            image.color = imageColor;
-        }
-        for (float i = 0; i < 0.1f; i += Time.unscaledDeltaTime)
-        {
-            yield return new WaitForSecondsRealtime(0.01f);
-            imageColor.a -= Time.unscaledDeltaTime * 10;
-            image.color = imageColor;
-        }
-        imageColor.a = 0;
-        image.color = imageColor;
+        HUDSlot slotToCall = FindCurrentlyEquippedSlot(type);
+        if (slotToCall)
+            slotToCall.FlashBorderOpacity();
     }
 
     public void UpdateFPS()

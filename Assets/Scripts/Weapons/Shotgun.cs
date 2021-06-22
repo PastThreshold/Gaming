@@ -6,9 +6,14 @@ public class Shotgun : BasicWeapon
     [Header("Fire")]
     [SerializeField] GameObject muzzleFlashVFX;
 
+    private void Awake()
+    {
+        BaseAwake();
+    }
 
     private void Start()
     {
+        BaseStart();
         CheckWeaponLevel();
     }
 

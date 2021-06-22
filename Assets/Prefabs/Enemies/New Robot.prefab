@@ -2685,11 +2685,11 @@ MonoBehaviour:
   firePointRotation: {fileID: 1186993865160060208}
   projectileSpawn: {fileID: 1186993865807517124}
   fireRate: 1.2
-  predictionValue: 10
+  predictionValue: 15
   predictionChance: 75
   minTimeBetweenShots: 2
   maxTimeBetweenShots: 4
-  minAmountOfShots: 3
+  minAmountOfShots: 4
   maxAmountOfShots: 8
   muzzleFlashVFX: {fileID: 0}
   ignoreTeleportLayer:
@@ -2722,8 +2722,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.8388486, y: 2.2649164, z: 0.9738982}
-  m_Center: {x: 0, y: -0.36, z: 0}
+  m_Size: {x: 1.2886214, y: 2.2649164, z: 0.9738982}
+  m_Center: {x: 0.017690897, y: -0.36, z: 0}
 --- !u!195 &1186993866386202300
 NavMeshAgent:
   m_ObjectHideFlags: 0

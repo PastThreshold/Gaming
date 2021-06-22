@@ -130,6 +130,7 @@ public class PushAndPull : BasicAbility, AbilityADT
                 push = true;
 
             ExplosionExpanding = true;
+            AbilityUsed();
             StartCoroutine("WaitAndEndExplosion", push);
             expObj = Instantiate(explosionObject, centerOfAbility, Quaternion.identity);
         }

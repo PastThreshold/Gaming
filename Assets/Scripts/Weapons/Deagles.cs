@@ -14,8 +14,14 @@ public class Deagles : BasicWeapon
     [SerializeField] AudioClip audioClip;
     [SerializeField] float pitchRandomization;
 
+    private void Awake()
+    {
+        BaseAwake();
+    }
+
     private void Start()
     {
+        BaseStart();
         shotSound = GetComponent<AudioSource>();
         CheckWeaponLevel();
     }
@@ -53,7 +59,6 @@ public class Deagles : BasicWeapon
             if (canFire && active)
             {
                 StartCoroutine(FireLevelOne());
-                /*
                 
                 switch (currentWeaponLevel)
                 {
@@ -72,7 +77,7 @@ public class Deagles : BasicWeapon
                     default:
                         Debug.Log("Weapon Level Error");
                         break;
-                }*/
+                }
             }
         }
     }
@@ -163,5 +168,11 @@ public class Deagles : BasicWeapon
         bullet.transform.rotation = rotation.transform.rotation;
         bullet.enabled = true;
         return bullet;
+    }
+
+    public override void EnableWeapon()
+    {
+        base.EnableWeapon();
+        SetSecondWeapon();
     }
 }

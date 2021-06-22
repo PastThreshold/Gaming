@@ -124,12 +124,12 @@ public class GlobalClass : MonoBehaviour
 
     void Start()
     {
-        playerPos = player.transform.position;
+        playerPos = player.GetCurrentPos();
     }
 
     void Update()
     {
-        playerPosPrev = playerPos;
-        playerPos = player.transform.position;
+        playerPosPrev = player.GetPreviousPos();
+        playerPos = player.GetCurrentPos();
     }
 }

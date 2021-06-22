@@ -23,7 +23,7 @@ public class Turret : MonoBehaviour
     {
         // Find player, get the active weapon, use that weapons projectile pool to get projectiles
         player = GlobalClass.player;
-        BasicWeapon activeWeapon = GlobalClass.weaponSwitcher.GetActiveWeapon().GetComponent<BasicWeapon>();
+        BasicWeapon activeWeapon = GlobalClass.weaponSwitcher.GetActiveWeapon();
         BasicWeapon.WeaponType activeWeaponType = activeWeapon.GetWeaponType();
         projPool = activeWeapon.projPool;
         originalLevel = activeWeapon.GetWeaponLevel();

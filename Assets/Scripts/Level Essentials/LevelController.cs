@@ -39,24 +39,6 @@ public class LevelController : MonoBehaviour
     static public int totalEnemies = 0;
     static public bool canSpawn;
 
-    [Header("Pickup Spawning")]
-    [SerializeField] Vector3 positiveSpawnBoundaries = Vector3.zero;
-    [SerializeField] Vector3 negativeSpawnBoundaries = Vector3.zero;
-    GameObject[] powerUps;
-    float[] chancesOfPowerUps;
-    [SerializeField] float minTimeBetweenPowerUpRolls = 5f;
-    [SerializeField] float maxTimeBetweenPowerUpRolls = 15f;
-    [SerializeField] float chanceForPowerUp = 20f;
-    [Tooltip("After a succesful roll for a powerup, a second chance will be rolled against (chance / this value), and then third and so on.")]
-    [Range(1f, 10f)] [SerializeField] float subsequentRollDivisorPenalty = 2f;
-
-    float newChanceValue;
-    bool rolling;
-    int previousScene;
-
-    // DEBUGGING/TESTING
-    [SerializeField] bool spawnPickups;
-
     private void Awake()
     {
         roomData = thisRoomData;
@@ -80,14 +62,11 @@ public class LevelController : MonoBehaviour
     {
         levelProgression = FindObjectOfType<LevelProgression>();
         mainCamera = Camera.main.GetComponent<CameraFollow>();
-        rolling = false;
         canSpawn = true;
         totalEnemies = 0;
         totalEnemiesToSpawn = roomData.GetTotalEnemies();
         enemiesLeftToSpawn = totalEnemiesToSpawn;
         maxEnemiesAtOnce = roomData.GetMaxEnemiesAtTime();
-        powerUps = roomData.GetPowerUps();
-        chancesOfPowerUps = roomData.GetPowerUpChances();
         GetProjectiles();
 
         wallBounds = GetWallBounds(boundsNotConverted);
@@ -104,8 +83,6 @@ public class LevelController : MonoBehaviour
             Debug.DrawLine(test1, test2, Color.cyan, 5f);
         }
 
-        Wave wave = roomData.GetNextWave();
-        print(wave.GetEnemyCounts()[4]);
     }
 
     private void Update()
@@ -118,11 +95,6 @@ public class LevelController : MonoBehaviour
             {
                 door.SetActive();
             }
-        }
-
-        if (!rolling && spawnPickups)
-        {
-            StartCoroutine("RollChanceForPowerUp");
         }
     }
 
@@ -148,37 +120,6 @@ public class LevelController : MonoBehaviour
             else
                 SceneManager.LoadScene(3);
         }
-    }
-
-    IEnumerator RollChanceForPowerUp()
-    {
-        rolling = true;
-        float roll = Random.Range(0f, 100f);
-        float newX, newY, newZ;
-        Vector3 spawnPos = Vector3.zero;
-        NavMeshHit hit;
-        newChanceValue = chanceForPowerUp;
-        int safetyBreak = 0;
-        while (roll <= newChanceValue)
-        {
-            newX = Random.Range(negativeSpawnBoundaries.x, positiveSpawnBoundaries.x);
-            newY = Random.Range(negativeSpawnBoundaries.y, positiveSpawnBoundaries.y);
-            newZ = Random.Range(negativeSpawnBoundaries.z, positiveSpawnBoundaries.z);
-            NavMesh.SamplePosition(new Vector3(newX, newY, newZ), out hit, 10, NavMesh.AllAreas);
-            spawnPos = hit.position;
-            spawnPos.y += 1.2f;
-            Instantiate(powerUps[Random.Range(0, powerUps.Length)], spawnPos, Quaternion.identity);
-            newChanceValue /= subsequentRollDivisorPenalty;
-            roll = Random.Range(0f, 100f);
-            if (Extra.CheckSafetyBreak(safetyBreak, 25))
-            {
-                Debug.Log("Infinite Loop Safety Break Triggered");
-                break;
-            }
-            safetyBreak++;
-        }
-        yield return new WaitForSeconds(Random.Range(minTimeBetweenPowerUpRolls, maxTimeBetweenPowerUpRolls));
-        rolling = false;
     }
 
     public static void AddEnemy(Enemy enem)

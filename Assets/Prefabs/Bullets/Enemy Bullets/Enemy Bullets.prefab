@@ -4884,6 +4884,8 @@ MonoBehaviour:
   beingUsed: 0
   spotInArray: 0
   belongsTo: {fileID: 0}
+  hitEffect: {fileID: 0}
+  enemyHitEffect: {fileID: 0}
   trail: {fileID: 2813838041462468647}
   pSystem: {fileID: 872904487961517778}
 --- !u!54 &-7448979052795575339

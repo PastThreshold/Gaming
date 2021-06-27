@@ -23,8 +23,6 @@ public class EnemySpawner : MonoBehaviour
     {
         level = FindObjectOfType<LevelController>();
         roomData = LevelController.roomData;
-        enemiesToSpawn = roomData.GetEnemyTypes();
-        enemyChanceToSpawn = roomData.GetEnemyTypeChances();
     }
 
     void Update()

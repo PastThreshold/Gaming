@@ -15,4 +15,6 @@ public class ExtraData : MonoBehaviour
     public LayerMask wallsAndEnemyShieldsLayerMask;
 
     public Enemy[] enemyPrefabs;
+    public Pickup[] weaponPrefabs;
+    public Pickup[] pickupPrefabs;
 }

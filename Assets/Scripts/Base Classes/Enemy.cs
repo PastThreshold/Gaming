@@ -201,12 +201,9 @@ public class Enemy : MonoBehaviour
         nma.velocity = Vector3.zero;
     }
 
-
-
-
-
-    protected virtual void TakenDamage()
+    protected virtual void TakenDamage(float damage)
     {
+        player.DealtDamage(damage);
         StartCoroutine(ChangeColor());
     }
 
@@ -227,7 +224,7 @@ public class Enemy : MonoBehaviour
     public virtual void TakeDamage(float damageAmount)
     {
         health -= damageAmount;
-        TakenDamage();
+        TakenDamage(damageAmount);
         if (health <= 0)
         {
             GetRidOfChildren();
@@ -239,7 +236,7 @@ public class Enemy : MonoBehaviour
     public virtual void TakeDamage(float damageAmount, float knockbackForce, Transform objTransform)
     {
         health -= damageAmount;
-        TakenDamage();
+        TakenDamage(damageAmount);
         if (health <= 0)
         {
             GetRidOfChildren();
@@ -250,10 +247,10 @@ public class Enemy : MonoBehaviour
         UpdateHealthAndLists();
     }
 
-    public virtual void TakeDamage(int damageAmount, float exForce, Vector3 exPos, float radius, float upForce, ForceMode frcMode)
+    public virtual void TakeDamage(float damageAmount, float exForce, Vector3 exPos, float radius, float upForce, ForceMode frcMode)
     {
         health -= damageAmount;
-        TakenDamage();
+        TakenDamage(damageAmount);
         if (health <= 0)
         {
             GetRidOfChildren();

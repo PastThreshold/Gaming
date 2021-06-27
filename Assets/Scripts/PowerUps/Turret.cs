@@ -65,7 +65,7 @@ public class Turret : MonoBehaviour
                 FindTargetCloseToPlayer();
                 return;
             }
-            transform.LookAt(target.transform.position);
+            transform.LookAt(Extra.SetYToTransform(target.transform.position, transform));
             barrelBase.transform.LookAt(target.transform.position);
             if (canFire)
             {

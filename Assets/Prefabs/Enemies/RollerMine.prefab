@@ -71,12 +71,12 @@ MonoBehaviour:
   damage: 10
   moveSpeed: 100
   distanceFactor: 5
-  velFactorWrongDirection: 1000
-  velFactorRightDirection: 10
+  velFactorWrongDirection: 250
+  velFactorRightDirection: 100
   velFactorReversingDirectionMax: 5
   velFactorReversingDirectionMin: 0
-  velReverseExponent: 3
-  closeToPlayerDistanceSquared: 10
+  velReverseExponent: 1
+  closeToPlayerDistanceSquared: 3
   testFactor: 100
   maxSpeed: 20
 --- !u!33 &4305603944975177846

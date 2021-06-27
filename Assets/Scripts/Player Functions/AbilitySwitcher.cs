@@ -12,7 +12,6 @@ public class AbilitySwitcher : MonoBehaviour
     [SerializeField] Canvas hud;
     HeadsUpDisplay hudScript;
     [SerializeField] ShieldAbility shield;
-    [SerializeField] PulseAbility pulse;
     [SerializeField] BulletTime bulletTime;
     [SerializeField] Grapple grapple;
     [SerializeField] HoldPickup holdPickup;

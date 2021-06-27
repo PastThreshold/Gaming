@@ -11,8 +11,8 @@ public class RollerMine : Enemy
     Vector3 direction;
 
     [SerializeField] float distanceFactor = 5;
-    [Range(1000f, 10000f)] [SerializeField] float velFactorWrongDirection = 1000f;
-    [Range(10f, 500f)] [SerializeField] float velFactorRightDirection = 100f;
+    [Range(100f, 10000f)] [SerializeField] float velFactorWrongDirection = 1000f;
+    [Range(1f, 500f)] [SerializeField] float velFactorRightDirection = 100f;
     [Range(5f, 100f)] [SerializeField] float velFactorReversingDirectionMax = 20f;
     [Range(0f, 5f)] [SerializeField] float velFactorReversingDirectionMin = 5f;
     [Range(1f, 10f)] [SerializeField] float velReverseExponent = 3f;
@@ -46,7 +46,7 @@ public class RollerMine : Enemy
             i++;
             if (Extra.CheckSafetyBreak(safetyBreak, 1000))
             {
-                Debug.Log("Infinite Loop Safety Break Triggered");
+                Debug.Log("Infinite Loop Safety Break Triggered - " + name);
                 break;
             }
             safetyBreak++;
@@ -107,7 +107,7 @@ public class RollerMine : Enemy
 
     IEnumerator ResetMovement()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(0.5f);
         justMissed = false;
         checkingDistance = true;
     }

@@ -10,30 +10,30 @@ public class RoomData : ScriptableObject
     [SerializeField] int levelNumber;
     [SerializeField] int totalEnemies = 100;
     [SerializeField] int maxEnemiesAtTime = 10;
-
-    [Header("These two must be the same size")]
-    [SerializeField] Enemy[] enemiesAllowedToSpawn;
-    [SerializeField] float[] chancesOfEnemiesSpawning;
-
-    [SerializeField] GameObject[] powerUps;
-    [SerializeField] float[] chancesOfPowerUps;
+    [SerializeField] float chanceForWeaponOrPowerup = 50f;
+    [SerializeField] float[] chanceForEachWeapon = new float[2];
+    [SerializeField] float[] chanceForEachPowerup = new float[2];
+    [SerializeField] float chanceForExtraPowerup;
+    [SerializeField] float minBtPowerup;
+    [SerializeField] float maxBtPowerup;
 
     public int GetTotalEnemies() { return totalEnemies; }
-
     public int GetMaxEnemiesAtTime() { return maxEnemiesAtTime; }
+    public float GetWeaponPowerupChance() { return chanceForWeaponOrPowerup;  }
+    public float[] GetWeaponChances() { return chanceForEachWeapon;  }
+    public float[] GetPowerupChances() { return chanceForEachPowerup;  }
+    public float GetExtraPowerupChance() { return chanceForExtraPowerup;  }
+    public float GetMinBtPowerup() { return minBtPowerup;  }
+    public float GetMaxBtPowerup() { return maxBtPowerup;  }
 
-    public Enemy[] GetEnemyTypes() { return enemiesAllowedToSpawn; }
-
-    public float[] GetEnemyTypeChances() { return chancesOfEnemiesSpawning; }
-
-    public GameObject[] GetPowerUps() { return powerUps; }
-
-    public float[] GetPowerUpChances() { return chancesOfPowerUps; }
-
-
-    public Wave GetNextWave()
+    public Wave GetNextWave(int index)
     {
-        return waves[0];
+        return waves[index];
+    }
+
+    public bool HasNextWave(int index)
+    {
+        return waves[index] != null;
     }
 }
 

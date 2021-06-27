@@ -21,7 +21,7 @@ public class Enrage : BasicAbility, AbilityADT
 
     int levelToHeal = 2;
     bool canHeal = false;
-    float damageToTimeConversion = 0.04f; // Time += damageTaken * conversion (ex. 20 * .04 = 0.8 seconds)
+    float damageToTimeConversion = 0.04f; // Time += damageDealt * conversion (ex. 20 * .04 = 0.8 seconds)
     bool onCooldown = false;
     bool enraged = false;
     bool healing = false;
@@ -52,22 +52,22 @@ public class Enrage : BasicAbility, AbilityADT
                 healPerSecond = healPerSecondL4;
                 break;
         }
-
         if (currentAbilityLevel >= levelToHeal)
             canHeal = true;
     }
 
     private void Start()
     {
+        BaseStart();
         playerScript = GlobalClass.player;
         CheckAbilityLevel();
     }
 
-    public void TookDamage(float damageTaken)
+    public void DealtDamage(float damageDealt)
     {
-        if (scriptRunning)
+        if (scriptRunning && (!enraged || !healing))
         {
-            float timeAcquired = damageTaken * damageToTimeConversion;
+            float timeAcquired = damageDealt * damageToTimeConversion;
             totalTime += timeAcquired;
             if (totalTime > maxTime)
                 totalTime = maxTime;

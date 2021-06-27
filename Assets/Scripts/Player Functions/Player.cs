@@ -136,7 +136,7 @@ public class Player : MonoBehaviour
     {
         if (!invulnerable)
         {
-            health = health - damage;
+            health -= damage;
             hud.UpdateHealth(health);
             if (health <= 0)
             {
@@ -148,27 +148,24 @@ public class Player : MonoBehaviour
                 {
                     enrageAbility.Deactivate();
                 }
-                else
-                {
-                    SendDamageToEnrageAbility(damage);
-                }
             }
         }
     }
 
-    private void SendDamageToEnrageAbility(float damage)
+    public void Heal(float heal)
     {
-        enrageAbility.TookDamage(damage);
-    }
-
-    public void Heal(float health)
-    {
-        this.health += health;
+        health += heal;
         if (health >= maxHealth)
         {
-            this.health = maxHealth;
+            health = maxHealth;
         }
         hud.UpdateHealth(health);
+    }
+
+
+    public void DealtDamage(float damage)
+    {
+        enrageAbility.DealtDamage(damage);
     }
 
     IEnumerator IncreaseSpeed()

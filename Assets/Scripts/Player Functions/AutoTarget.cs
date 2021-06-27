@@ -33,6 +33,8 @@ public class AutoTarget : BasicAbility, AbilityADT
             else
                 target = Extra.ReturnClosestEnemyFromList(nearEnemies);
 
+            print(target.name);
+
             if (HasTarget())
                 hud.UpdateAutoTargetCrosshair(GetTargetPosition());
             else

@@ -248,19 +248,6 @@ public class Protector : Enemy
         normalShield.transform.position = targetToProtect.transform.position;
         if (inFormation)
             return;
-        /*
-        if (!protectionMovement)
-        {
-            if ((targetToProtect.transform.position - transform.position).sqrMagnitude > distanceToStayWithinTarget)
-            {
-                StopRandomMovement();
-                Vector3 playerToTarget = targetToProtect.transform.position - playerPos;
-                Vector3 positionBehindTarget = Quaternion.Euler(0, UnityEngine.Random.Range(-30f, 30f), 0) * playerToTarget.normalized;
-                positionBehindTarget = positionBehindTarget * UnityEngine.Random.Range(2f, 5f) + playerToTarget + playerPos;
-                Move(positionBehindTarget);
-                StartCoroutine(ProtectionMovementTimer());
-            }
-        }*/
     }
 
     /// <summary>

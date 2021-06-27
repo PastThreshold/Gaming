@@ -204,7 +204,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeUntilSpawnerDeath: 15
   timeAllowed: 15
-  type: 1
+  type: 0
   weaponType: 7
   objType: 3
   pickupType: 6

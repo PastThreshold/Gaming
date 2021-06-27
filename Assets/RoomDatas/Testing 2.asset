@@ -14,33 +14,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waves:
   - {fileID: 11400000, guid: c3dad47ffb37f6648bfe194a44cae724, type: 2}
+  - {fileID: 11400000, guid: e210c77935dcceb4a8a835c16f68ac62, type: 2}
   levelNumber: 0
   totalEnemies: 10
   maxEnemiesAtTime: 10
-  enemiesAllowedToSpawn:
-  - {fileID: 1186993866386202297, guid: f79f85e91b8b89e4ab2a4c536c7f6a25, type: 3}
-  - {fileID: -7098076406716867578, guid: 4af53ef367deb6b43915706481ce40bb, type: 3}
-  - {fileID: 4775496079983928083, guid: 9e1a9a24dde8ca54c931bf20507c4edd, type: 3}
-  - {fileID: 4305603944975177843, guid: 80b5911a94af33f47a0a10912a528961, type: 3}
-  - {fileID: 4601231081681780507, guid: 90f7975c0f4e08e4c8cec2d73fc854ee, type: 3}
-  chancesOfEnemiesSpawning:
-  - 30
-  - 20
-  - 15
-  - 10
-  - 5
-  powerUps:
-  - {fileID: 3827712026222437322, guid: 5642f867fbefc214f9220303d5646c19, type: 3}
-  - {fileID: 6308277994548087778, guid: 5fe8ee37f9dbaa1418015358ec4c79f8, type: 3}
-  - {fileID: 7437428058083138574, guid: 15e6cffca9e92aa48852989595cbc3fe, type: 3}
-  - {fileID: 9085508471081072805, guid: dd36a838e6a4fb042a225fe4e02e0733, type: 3}
-  - {fileID: 9085508471081072805, guid: 86b58eef48e3098469254d669b97f0c8, type: 3}
-  - {fileID: 9085508471081072805, guid: ad0e8a31d445024469a1eeea221ebc22, type: 3}
-  - {fileID: 792613932167208258, guid: d6b4ddd7565a0b84595306b986f27aa2, type: 3}
-  - {fileID: 5514621885683197005, guid: bd9300f6606d1e343a3e0aed628f6ef2, type: 3}
-  - {fileID: 886284768857135593, guid: 1616047f5aa187840a86c3e1c869590b, type: 3}
-  - {fileID: 4027537848821911822, guid: df53fcc00b32a2648819d8d12d9a4475, type: 3}
-  - {fileID: 7116246391489107465, guid: 136d6bc6d487f8b428d40c9193b9e518, type: 3}
-  - {fileID: 8143276102244081314, guid: c0426639eb287b847af4ec3f9b68c98d, type: 3}
-  - {fileID: 9085508471081072805, guid: 6f5c7fc7c8044464e86bfc6753d9c631, type: 3}
-  chancesOfPowerUps: []
+  chanceForWeaponOrPowerup: 50
+  chanceForEachWeapon:
+  - 14.28
+  - 14.28
+  - 14.28
+  - 14.28
+  - 14.28
+  - 14.28
+  - 14.5
+  chanceForEachPowerup:
+  - 16.66
+  - 16.66
+  - 16.66
+  - 16.66
+  - 16.66
+  - 16.67
+  chanceForExtraPowerup: 85
+  minBtPowerup: 3
+  maxBtPowerup: 5

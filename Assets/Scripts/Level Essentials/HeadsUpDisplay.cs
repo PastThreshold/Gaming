@@ -282,10 +282,11 @@ public class HeadsUpDisplay : MonoBehaviour
 
     public void AbilityInUse(BasicAbility.abilityType type)
     {
+        /*
         print("called this");
         HUDSlot slotToCall = FindCurrentlyEquippedSlot(type);
         if (slotToCall)
-            slotToCall.ChangeBorderOpacity(true);
+            slotToCall.ChangeBorderOpacity(true);*/
     }
 
     public void AbilityNotInUse(BasicAbility.abilityType type)

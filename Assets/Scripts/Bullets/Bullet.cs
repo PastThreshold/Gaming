@@ -54,6 +54,7 @@ public class Bullet : Projectile
                     DisableProjectile();
                 break;
             case GlobalClass.SHIELD_TAG:
+                DisableProjectile();
                 break;
             case GlobalClass.DEFLECT_TAG:
                 break;

@@ -306,9 +306,11 @@ public class Extra : MonoBehaviour
     {
         List<Enemy> resultList = new List<Enemy>();
         foreach (GameObject obj in list) // Sift out the enemies from the list of GameObjects
-        {
+        { 
+            print("TAG: " + obj.tag);
             if (obj.CompareTag(GlobalClass.ENEMY_TAG)) // If its an enemy
             {
+                print("Added");
                 resultList.Add(obj.GetComponent<Enemy>());
             }
         }

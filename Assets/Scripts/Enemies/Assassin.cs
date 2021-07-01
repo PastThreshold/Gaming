@@ -80,7 +80,7 @@ public class Assassin : Enemy
             else
             {
                 lethalDash = true;
-                StartCoroutine("ChargeDash");
+                StartCoroutine(ChargeDash());
             }
         }
 

@@ -72,6 +72,8 @@ public class Turret : MonoBehaviour
                 StartCoroutine("Fire");
             }
         }
+        else if (LevelController.allEnemiesInScene.Count > 0)
+            FindTargetCloseToPlayer();
     }
 
     public void TargetDestroyed()

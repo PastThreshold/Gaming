@@ -336,6 +336,7 @@ MonoBehaviour:
   projectile: {fileID: 0}
   secondFirePoint: {fileID: 353801182655149970}
   firingProjectile: {fileID: 0}
+  chargeRifleShot: {fileID: 0}
 --- !u!1 &390778910088625891
 GameObject:
   m_ObjectHideFlags: 0
@@ -1080,6 +1081,7 @@ Transform:
   - {fileID: 648090331777604277}
   - {fileID: 6518698180396744560}
   - {fileID: 7830032038320765673}
+  - {fileID: 7998622299955277038}
   m_Father: {fileID: 5549658378289529774}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1100,8 +1102,9 @@ MonoBehaviour:
   firePoint: {fileID: 7830032038320765673}
   autoTargetFirePointRotation: {fileID: 7041952171100009802}
   projectile: {fileID: 0}
-  secondFirePoint: {fileID: 0}
+  secondFirePoint: {fileID: 7998622299955277038}
   firingProjectile: {fileID: 0}
+  chargeRifleShot: {fileID: 0}
 --- !u!1 &1444167926542753631
 GameObject:
   m_ObjectHideFlags: 0
@@ -1317,6 +1320,7 @@ MonoBehaviour:
   projectile: {fileID: 0}
   secondFirePoint: {fileID: 0}
   firingProjectile: {fileID: 0}
+  chargeRifleShot: {fileID: 0}
 --- !u!1 &1746760645677095562
 GameObject:
   m_ObjectHideFlags: 0
@@ -1897,6 +1901,7 @@ MonoBehaviour:
   projectile: {fileID: 0}
   secondFirePoint: {fileID: 0}
   firingProjectile: {fileID: 0}
+  chargeRifleShot: {fileID: 0}
 --- !u!1 &2439540512138966866
 GameObject:
   m_ObjectHideFlags: 0
@@ -2032,6 +2037,7 @@ MonoBehaviour:
   projectile: {fileID: 0}
   secondFirePoint: {fileID: 8668296357352655322}
   firingProjectile: {fileID: 0}
+  chargeRifleShot: {fileID: 0}
 --- !u!1 &2558009265594580496
 GameObject:
   m_ObjectHideFlags: 0
@@ -2694,6 +2700,36 @@ Transform:
   m_Father: {fileID: 792477502791257256}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0.3558636, y: 5.8357167, z: -5.136177}
+--- !u!1 &3731388997953317125
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7998622299955277038}
+  m_Layer: 0
+  m_Name: Barrel (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7998622299955277038
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3731388997953317125}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.879, y: 0.2392, z: -0.15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1444167926542376817}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3817595155740134679
 GameObject:
   m_ObjectHideFlags: 0
@@ -4573,6 +4609,7 @@ MonoBehaviour:
   projectile: {fileID: 0}
   secondFirePoint: {fileID: 0}
   firingProjectile: {fileID: 0}
+  chargeRifleShot: {fileID: 0}
 --- !u!1 &6239966971775256450
 GameObject:
   m_ObjectHideFlags: 0
@@ -9943,6 +9980,7 @@ MonoBehaviour:
   projectile: {fileID: 0}
   secondFirePoint: {fileID: 0}
   firingProjectile: {fileID: 0}
+  chargeRifleShot: {fileID: 0}
 --- !u!1 &6398553208360308688
 GameObject:
   m_ObjectHideFlags: 0
@@ -10468,6 +10506,7 @@ MonoBehaviour:
   projectile: {fileID: 0}
   secondFirePoint: {fileID: 0}
   firingProjectile: {fileID: 0}
+  chargeRifleShot: {fileID: 0}
 --- !u!1 &7140831303755623965
 GameObject:
   m_ObjectHideFlags: 0
@@ -10521,6 +10560,7 @@ MonoBehaviour:
   projectile: {fileID: 0}
   secondFirePoint: {fileID: 0}
   firingProjectile: {fileID: 0}
+  chargeRifleShot: {fileID: 0}
 --- !u!1 &7141475438680515471
 GameObject:
   m_ObjectHideFlags: 0
@@ -10654,6 +10694,7 @@ MonoBehaviour:
   projectile: {fileID: 0}
   secondFirePoint: {fileID: 0}
   firingProjectile: {fileID: 0}
+  chargeRifleShot: {fileID: 0}
 --- !u!1 &7501456532191121004
 GameObject:
   m_ObjectHideFlags: 0
@@ -11930,6 +11971,7 @@ MonoBehaviour:
   projectile: {fileID: 0}
   secondFirePoint: {fileID: 0}
   firingProjectile: {fileID: 0}
+  chargeRifleShot: {fileID: 0}
 --- !u!1 &8797226444374001606
 GameObject:
   m_ObjectHideFlags: 0
@@ -11983,6 +12025,7 @@ MonoBehaviour:
   projectile: {fileID: 0}
   secondFirePoint: {fileID: 0}
   firingProjectile: {fileID: 0}
+  chargeRifleShot: {fileID: 0}
 --- !u!1 &8889825549499838909
 GameObject:
   m_ObjectHideFlags: 0
@@ -12246,6 +12289,7 @@ MonoBehaviour:
   projectile: {fileID: 0}
   secondFirePoint: {fileID: 0}
   firingProjectile: {fileID: 0}
+  chargeRifleShot: {fileID: 0}
 --- !u!1 &9215567347017294160
 GameObject:
   m_ObjectHideFlags: 0

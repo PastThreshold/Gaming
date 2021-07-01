@@ -195,6 +195,8 @@ public class WeaponsSwitcher : MonoBehaviour
             int slot = Extra.ConvertFromWeaponTypeToGlobalNumber(type);
             allWeapons[slot].PermanantUpgradeWeaponLevel();
             hud.ChangeWeaponLevel(slot, allWeapons[slot].GetCurrentLevel());
+            SwapCloneWeapon();
+            Destroy(other.gameObject);
         }
     }
 
@@ -202,7 +204,6 @@ public class WeaponsSwitcher : MonoBehaviour
     // Increase the time
     private void ChangeEquippedWeapon(int weaponNumber, float time)
     {
-        print("Weapon NUmber: " + weaponNumber);
         int weaponSlotToAssign = activeSlot;
         for (int i = 0; i < equippedWeapons.Length; i++)
         {

@@ -40,6 +40,7 @@ public class DeflectAbility : BasicAbility, AbilityADT
 
     private void Start()
     {
+        BaseStart();
         shield.gameObject.SetActive(false);
         altShield.gameObject.SetActive(false);
         CheckAbilityLevel();

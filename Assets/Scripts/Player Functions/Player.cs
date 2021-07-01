@@ -81,7 +81,6 @@ public class Player : MonoBehaviour
     {
         previousPosition = currentPosition;
         currentPosition = transform.position;
-        //print((previousPosition == currentPosition) + " With prev: " + previousPosition.ToString("F3") + " and current: " + currentPosition.ToString("F3"));
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 

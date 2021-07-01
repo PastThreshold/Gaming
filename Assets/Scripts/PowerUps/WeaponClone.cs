@@ -18,6 +18,7 @@ public class WeaponClone : MonoBehaviour
 
     public GameObject firingProjectile = null; // Intended for the laser and charge rifle because they dont just instantiate bullets
     float scaleAddPerSecond = 0;
+    public ChargeShot chargeRifleShot = null;
 
     bool waitingToTick = false; // Laser, it waits between damage ticks
     float damage = 0f;
@@ -119,9 +120,9 @@ public class WeaponClone : MonoBehaviour
                 firingProjectile.transform.parent = firePoint.transform;
                 break;
             case BasicWeapon.WeaponType.chargeRifle:
-                if (firingProjectile == null)
-                    firingProjectile = CreateBasicProjectile().gameObject;
-                firingProjectile.transform.parent = firePoint.transform;
+                if (chargeRifleShot == null)
+                    chargeRifleShot = CreateBasicProjectile().GetComponent<ChargeShot>();
+                chargeRifleShot.EnableProjectile();
                 break;
             default:
                 bullet = CreateBasicProjectile();
@@ -228,9 +229,11 @@ public class WeaponClone : MonoBehaviour
                 }
                 break;
             case BasicWeapon.WeaponType.chargeRifle:
-                this.scaleAddPerSecond = chargeRifleScript.scaleAddPerSecond;
-                firingProjectile.transform.localScale += 
-                    new Vector3(scaleAddPerSecond, scaleAddPerSecond, scaleAddPerSecond) * Time.deltaTime;
+                print("holding");
+                scaleAddPerSecond = chargeRifleScript.scaleAddPerSecond;
+                chargeRifleShot.Charge(scaleAddPerSecond);
+                chargeRifleShot.transform.position = firePoint.position;
+                chargeRifleShot.transform.rotation = firePointRotation.rotation;
                 break;
             default:
                 break;
@@ -246,9 +249,9 @@ public class WeaponClone : MonoBehaviour
                 firingProjectile = null;
                 break;
             case BasicWeapon.WeaponType.chargeRifle:
-                firingProjectile.transform.parent = null;
-                firingProjectile.GetComponent<ChargeShot>().FireShot();
-                firingProjectile = null;
+                chargeRifleShot.transform.parent = null;
+                chargeRifleShot.FireShot();
+                chargeRifleShot = null;
                 break;
             default:
                 break;

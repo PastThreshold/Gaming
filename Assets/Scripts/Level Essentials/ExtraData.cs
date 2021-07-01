@@ -10,6 +10,7 @@ public class ExtraData : MonoBehaviour
 {
     public LayerMask bulletLayerMask;
     public LayerMask enemiesOnlyLM;
+    public LayerMask playerOnlyLM;
     public LayerMask proctilesOnlyLM;
     public LayerMask bulletsNoDefault;
     public LayerMask wallsAndEnemyShieldsLayerMask;

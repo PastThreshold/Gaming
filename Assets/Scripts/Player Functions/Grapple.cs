@@ -40,12 +40,12 @@ public class Grapple : BasicAbility, AbilityADT
     float damage = 0;
 
     GameObject firedGrapple;
-    [SerializeField] float groundPlaneYAxis = -1.2265f;
     bool scriptRunning = false;
 
     // Start is called before the first frame update
     void Start()
     {
+        BaseStart();
         projPool = GlobalClass.hookShotPool;
         firedGrapple = Instantiate(grapple, grappleStartPos.transform.position, Quaternion.identity);
         firedGrapple.transform.parent = transform;

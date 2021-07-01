@@ -4876,7 +4876,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectileType: 0
   isEnemyBullet: 1
-  speed: 20
+  speed: 40
   damage: 20
   force: 1
   level: 1

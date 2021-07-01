@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2833409724001016016}
   - component: {fileID: 3398222674458796889}
   - component: {fileID: 2843241834434302980}
-  - component: {fileID: -301472848458179203}
   m_Layer: 15
   m_Name: Stim Field Pickup
   m_TagString: Pickup
@@ -68,19 +67,6 @@ MonoBehaviour:
   pickupType: 3
   thisPickup: {fileID: 5246656385124952949, guid: c4a5512e589a3f24ba8ba8351ddc0d14, type: 3}
   correctYSpawnValue: -1
---- !u!114 &-301472848458179203
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 886284768857135593}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 632d5d12ea319cc4789bd0d940902320, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  time: 15
 --- !u!1 &4030777428038667962
 GameObject:
   m_ObjectHideFlags: 0

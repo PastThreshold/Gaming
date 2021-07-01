@@ -9,21 +9,35 @@ public class Bullet : Projectile
     [SerializeField] ParticleSystem pSystem;
     Vector3[] positions;
     bool trailFrozen = false;
+    Vector3 lastPos;
+    Vector3 nowPos;
 
     private void Start()
     {
         BaseStart();
         DisableProjectile();
+        nowPos = transform.position;
     }
 
     void FixedUpdate()
     {
+        lastPos = nowPos;
+        nowPos = transform.position;
+        //Extra.DrawBox(lastPos, 0.25f, Color.white, 0.25f);
         BaseFixedUpdate();
+        print(rb.velocity.sqrMagnitude);
+        if (rb.velocity.sqrMagnitude >= 6200)
+            RaycastForCollision();
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider collider)
     {
-        switch (other.tag)
+        HandleCollision(collider);
+    }
+
+    private void HandleCollision(Collider collider)
+    {
+        switch (collider.tag)
         {
             case GlobalClass.DEFAULT_TAG:
                 DisableProjectile();
@@ -31,7 +45,7 @@ public class Bullet : Projectile
             case GlobalClass.PLAYER_TAG:
                 if (isEnemyBullet)
                 {
-                    other.GetComponentInParent<Player>().TakeDamage(currentDamage);
+                    collider.GetComponentInParent<Player>().TakeDamage(currentDamage);
                     DisableProjectile();
                 }
                 break;
@@ -40,7 +54,7 @@ public class Bullet : Projectile
             case GlobalClass.ENEMY_TAG:
                 if (!isEnemyBullet)
                 {
-                    other.GetComponentInParent<Enemy>().TakeDamage(currentDamage);
+                    collider.GetComponentInParent<Enemy>().TakeDamage(currentDamage);
                     DisableProjectile();
                 }
                 break;
@@ -50,7 +64,7 @@ public class Bullet : Projectile
                 DisableProjectile();
                 break;
             case GlobalClass.SPECIAL_TAG:
-                if (!other.GetComponent<SphereWeapon>() && !other.GetComponent<TimeField>())
+                if (!collider.GetComponent<SphereWeapon>() && !collider.GetComponent<TimeField>())
                     DisableProjectile();
                 break;
             case GlobalClass.SHIELD_TAG:
@@ -66,6 +80,16 @@ public class Bullet : Projectile
                 Debug.Log("Different String Collision");
                 DisableProjectile();
                 break;
+        }
+    }
+
+    protected void RaycastForCollision()
+    {
+        RaycastHit hit;
+        //Debug.DrawRay(lastPos, (lastPos - nowPos).normalized * (lastPos - nowPos).magnitude, Color.blue, 0.25f);
+        if (Physics.Raycast(lastPos, (lastPos - nowPos).normalized, out hit, (lastPos - nowPos).magnitude, GlobalClass.exD.bulletLayerMask))
+        {
+            HandleCollision(hit.collider);
         }
     }
 

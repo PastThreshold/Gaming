@@ -14885,7 +14885,7 @@ MonoBehaviour:
   minimumScale: 0.2
   maximumScale: 2
   minDamage: 10
-  maxDamage: 20
+  maxDamage: 80
   scaleAddPerSecSphere: 1
   damageStates:
   - {fileID: 6773460675220898289}
@@ -14893,7 +14893,7 @@ MonoBehaviour:
   tendril: {fileID: 7130256517588744355}
   statePoints:
   - 0
-  - 8
+  - 5
   pSystem: {fileID: 2489489250385311657}
   startP: {fileID: 2591146034594103478}
   midP: {fileID: 4190132286542089583}
